@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manhwa AI Finder</title>
+    <title>SLAX MANHWA AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0d0d0d;
-            --card-bg: #16161a;
+            --bg-color: #0b0b0e;
+            --card-bg: #141419;
             --accent-color: #ff2a4b;
             --accent-hover: #d91b3a;
             --text-color: #ffffff;
             --text-dim: #a0a0a0;
-            --border-color: #26262e;
+            --border-color: #23232c;
+            --selected-border: #00ff88;
         }
 
         * {
@@ -30,7 +31,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 2rem 1rem;
+            padding: 2rem 1rem 5rem 1rem;
         }
 
         header {
@@ -41,7 +42,7 @@
         header h1 {
             font-size: 2.5rem;
             font-weight: 900;
-            color: var(--text-color);
+            letter-spacing: 1px;
         }
 
         header h1 span {
@@ -55,10 +56,10 @@
 
         .search-container {
             width: 100%;
-            max-width: 600px;
+            max-width: 650px;
             display: flex;
             gap: 10px;
-            margin-bottom: 2.5rem;
+            margin-bottom: 1.5rem;
         }
 
         select, button {
@@ -81,44 +82,101 @@
             color: white;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.2s ease;
+            transition: all 0.2s ease;
         }
 
         button:hover {
             background-color: var(--accent-hover);
         }
 
+        /* Selection Controls Bar */
+        .selection-bar {
+            width: 100%;
+            max-width: 1100px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 0.8rem 1.2rem;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .selection-count {
+            font-weight: bold;
+            color: var(--selected-border);
+        }
+
+        .action-btn {
+            background: #22222b;
+            font-size: 0.85rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+        }
+
         .results-grid {
             width: 100%;
             max-width: 1100px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.2rem;
         }
 
         .card {
             background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
+            border: 2px solid var(--border-color);
             border-radius: 12px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            transition: transform 0.2s ease, border-color 0.2s ease;
+            cursor: pointer;
+            position: relative;
+            user-select: none;
+            transition: all 0.2s ease;
         }
 
         .card:hover {
-            transform: translateY(-5px);
             border-color: var(--accent-color);
+        }
+
+        .card.selected {
+            border-color: var(--selected-border) !important;
+            box-shadow: 0 0 12px rgba(0, 255, 136, 0.2);
+        }
+
+        .card-checkbox {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 24px;
+            height: 24px;
+            background: rgba(0,0,0,0.8);
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: transparent;
+            z-index: 2;
+        }
+
+        .card.selected .card-checkbox {
+            background: var(--selected-border);
+            border-color: var(--selected-border);
+            color: #000;
+            font-weight: bold;
         }
 
         .card img {
             width: 100%;
-            height: 300px;
+            height: 280px;
             object-fit: cover;
         }
 
         .card-content {
-            padding: 1rem;
+            padding: 0.8rem;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
@@ -126,33 +184,16 @@
         }
 
         .card-title {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
             line-height: 1.3;
         }
 
         .card-score {
             color: #ffd700;
-            font-size: 0.9rem;
-            font-weight: bold;
-            margin-bottom: 0.8rem;
-        }
-
-        .card-link {
-            text-align: center;
-            background: #22222a;
-            color: var(--text-color);
-            text-decoration: none;
-            padding: 0.5rem;
-            border-radius: 6px;
             font-size: 0.85rem;
             font-weight: bold;
-            transition: background 0.2s;
-        }
-
-        .card-link:hover {
-            background: var(--accent-color);
         }
 
         .status-msg {
@@ -167,83 +208,118 @@
 <body>
 
     <header>
-        <h1>MANHWA <span>FINDER</span></h1>
-        <p>مستكشف المانهوا السريع - اختر التصنيف واستخرج أفضل المانهوا مجاناً</p>
+        <h1>SLAX <span>MANHWA AI</span></h1>
+        <p>مستكشف المانهوا الذكي - اختر التصنيف واختَر عدة أعمال في وقت واحد</p>
     </header>
 
     <div class="search-container">
         <select id="genreSelect">
-            <option value="">-- اختر التصنيف المطلوبة --</option>
-            <option value="1">Action (أكشن)</option>
-            <option value="2">Adventure (مغامرة)</option>
-            <option value="4">Comedy (كوميديا)</option>
-            <option value="8">Drama (دراما)</option>
-            <option value="10">Fantasy (فانتازيا)</option>
-            <option value="14">Horror (رعب)</option>
-            <option value="22">Romance (رومانسي)</option>
-            <option value="24">Sci-Fi (خيال علمي)</option>
-            <option value="36">Slice of Life (شريحة من الحياة)</option>
-
-            <option value="37">Supernatural (خارق للعادة)</option>
-            <option value="62">Isekai / Reincarnation (انتقال لـ عالم آخر)</option>
+            <option value="all">كل التصنيفات (الأعلى تقييماً)</option>
+            <option value="action">Action (أكشن)</option>
+            <option value="fantasy">Fantasy (فانتازيا)</option>
+            <option value="adventure">Adventure (مغامرة)</option>
+            <option value="system">System / Leveling (أنظمة وترقية)</option>
+            <option value="romance">Romance (رومانسي)</option>
+            <option value="reincarnation">Reincarnation / Isekai (تجسد/انتقال)</option>
+            <option value="comedy">Comedy (كوميديا)</option>
+            <option value="drama">Drama (دراما)</option>
         </select>
         <button onclick="searchManhwa()">بحث الان</button>
     </div>
 
+    <div class="selection-bar">
+        <div>المحدد حالياً: <span class="selection-count" id="selectCount">0</span> مانهوا</div>
+        <button class="action-btn" onclick="copySelected()">نسخ العناوين المختارة 📋</button>
+    </div>
+
     <div class="results-grid" id="resultsGrid">
-        <div class="status-msg">اختر تصنيفاً واضغط على زر البحث للبدء...</div>
+        <div class="status-msg">اضغط على زر البحث للبدء...</div>
     </div>
 
     <script>
+        let selectedList = new Set();
+
         async function searchManhwa() {
-            const genreId = document.getElementById('genreSelect').value;
+            const genre = document.getElementById('genreSelect').value;
             const resultsGrid = document.getElementById('resultsGrid');
 
-            if (!genreId) {
-                resultsGrid.innerHTML = '<div class="status-msg">يرجى اختيار تصنيف أولاً!</div>';
-                return;
+            resultsGrid.innerHTML = '<div class="status-msg">جاري استخراج المانهوا... ⏳</div>';
+            selectedList.clear();
+            updateCount();
+
+            // بناء رابط الاستعلام المباشر المرن دون تعقيدات معرفات التصنيف الحادة
+            let queryUrl = `https://api.jikan.moe/v4/manga?type=manhwa&order_by=score&sort=desc&limit=24`;
+            
+            if (genre !== 'all') {
+                queryUrl += `&q=${genre}`;
             }
 
-            resultsGrid.innerHTML = '<div class="status-msg">جاري جلب أفضل المانهوا... ⏳</div>';
-
             try {
-                // Jikan API (MyAnimeList Engine) configured specifically for Korean Manhwa
-                const response = await fetch(`https://api.jikan.moe/v4/manga?type=manhwa&genres=${genreId}&order_by=score&sort=desc&limit=12`);
+                const response = await fetch(queryUrl);
                 const data = await response.json();
 
                 if (!data.data || data.data.length === 0) {
-                    resultsGrid.innerHTML = '<div class="status-msg">لم يتم العثور على مانهوا لهذا التصنيف.</div>';
+                    resultsGrid.innerHTML = '<div class="status-msg">لم يتم العثور على مانهوا لهذا التصنيف، حاول اختيار تصنيف آخر.</div>';
                     return;
                 }
 
                 resultsGrid.innerHTML = '';
 
                 data.data.forEach(item => {
-                    const title = item.title_japanese || item.title || 'عنوان غير معروف';
+                    const title = item.title_english || item.title || 'عنوان غير معروف';
                     const image = item.images?.jpg?.large_image_url || 'https://via.placeholder.com/225x350';
                     const score = item.score ? `⭐ ${item.score}` : 'بدون تقييم';
-                    const url = item.url;
 
-                    const cardHtml = `
-                        <div class="card">
-                            <img src="${image}" alt="${title}" loading="lazy">
-                            <div class="card-content">
-                                <div>
-                                    <div class="card-title">${title}</div>
-                                    <div class="card-score">${score}</div>
-                                </div>
-                                <a href="${url}" target="_blank" class="card-link">عرض التفاصيل ↗</a>
-                            </div>
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.setAttribute('data-title', title);
+
+                    card.innerHTML = `
+                        <div class="card-checkbox">✓</div>
+                        <img src="${image}" alt="${title}" loading="lazy">
+                        <div class="card-content">
+                            <div class="card-title">${title}</div>
+                            <div class="card-score">${score}</div>
                         </div>
                     `;
-                    resultsGrid.insertAdjacentHTML('beforeend', cardHtml);
+
+                    // ميزة التحديد المتعدد بالنقر
+                    card.onclick = () => {
+                        if (selectedList.has(title)) {
+                            selectedList.delete(title);
+                            card.classList.remove('selected');
+                        } else {
+                            selectedList.add(title);
+                            card.classList.add('selected');
+                        }
+                        updateCount();
+                    };
+
+                    resultsGrid.appendChild(card);
                 });
 
             } catch (error) {
                 console.error(error);
-                resultsGrid.innerHTML = '<div class="status-msg">حدث خطأ أثناء جلب البيانات. حاول مرة أخرى.</div>';
+                resultsGrid.innerHTML = '<div class="status-msg">حدث خطأ في جلب البيانات، يرجى إعادة المحاولة.</div>';
             }
         }
+
+        function updateCount() {
+            document.getElementById('selectCount').innerText = selectedList.size;
+        }
+
+        function copySelected() {
+            if (selectedList.size === 0) {
+                alert('لم تقم بتحديد أي مانهوا بعد!');
+                return;
+            }
+            const textToCopy = Array.from(selectedList).join('\n');
+            navigator.clipboard.writeText(textToCopy);
+            alert(`تم نسخ (${selectedList.size}) مانهوا إلى الحافظة بنجاح!`);
+        }
+
+        // تشغيل بحث تلقائي عند التحميل الأول
+        window.onload = searchManhwa;
     </script>
 </body>
 </html>
