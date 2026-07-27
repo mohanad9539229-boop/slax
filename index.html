@@ -229,7 +229,7 @@
     <div class="container">
         <header>
             <h1>SLAX <span>MANHWA HUB v4.0</span></h1>
-            <p class="sub">تصفح المانهوا بدون تكرار مع إمكانية الفلترة ونظام المفضلة</p>
+            <p class="sub">تصفح آمن بدون تكرار وبدون محتوى +18 أو BL</p>
         </header>
         
         <div class="controls">
@@ -293,10 +293,12 @@
             130566, 166154, 135318, 124783, 133708, 87154, 137969, 180890, 150170, 139339
         ];
 
+        // قائمة التصنيفات المحظورة تماماً
+        const blockedGenres = ["Boys Love", "Ecchi", "Hentai", "Yaoi", "Erotica", "Shounen Ai", "Yuri", "Shoujo Ai"];
+
         let savedExclusions = JSON.parse(localStorage.getItem('slax_excluded_ids')) || [];
         let favorites = JSON.parse(localStorage.getItem('slax_favorites')) || [];
         
-        // إزالة التكرار أوتوماتيكياً عبر Set
         let excludedSet = new Set([...initialExcluded, ...savedExclusions]);
         let currentFetchedList = [];
         let activeItem = null;
@@ -317,17 +319,26 @@
         }
 
         async function fetchUniqueManhwa() {
-            if (showingFavs) toggleFavView(); // الخروج من وضع المفضلة عند الجلب
+            if (showingFavs) toggleFavView();
             
             const btn = document.getElementById('loadBtn');
-            btn.innerText = "جاري الجلب...";
+            btn.innerText = "جاري الجلب والنظافة...";
             btn.disabled = true;
 
+            // استعلام API يمنع محتوى 18+ و Boys Love أوتوماتيكياً من السيرفر
             const query = `
             query GetMassiveManhwa($page: Int, $perPage: Int, $excluded: [Int]) {
               Page(page: $page, perPage: $perPage) {
-                media(type: MANGA, countryOfOrigin: "KR", sort: POPULARITY_DESC, id_not_in: $excluded) {
+                media(
+                  type: MANGA, 
+                  countryOfOrigin: "KR", 
+                  sort: POPULARITY_DESC, 
+                  id_not_in: $excluded,
+                  isAdult: false,
+                  genre_not_in: ["Boys Love", "Ecchi"]
+                ) {
                   id
+                  isAdult
                   title { english romaji }
                   coverImage { large }
                   averageScore
@@ -357,19 +368,25 @@
                     throw new Error("Invalid Response");
                 }
 
-                const mediaList = result.data.Page.media;
+                const rawList = result.data.Page.media;
 
-                if (mediaList.length === 0) {
-                    document.getElementById('manhwaGrid').innerHTML = '<p style="grid-column: 1/-1;">تم عرض جميع المانهوات المتاحة!</p>';
+                // طبقة حماية ثانية في الجافاسكريبت للحظر والتأكد 100%
+                const cleanList = rawList.filter(item => {
+                    const hasBlockedGenre = item.genres && item.genres.some(g => blockedGenres.includes(g));
+                    return !item.isAdult && !hasBlockedGenre;
+                });
+
+                if (cleanList.length === 0) {
+                    document.getElementById('manhwaGrid').innerHTML = '<p style="grid-column: 1/-1;">تم عرض جميع المانهوات المتاحة النظيفة!</p>';
                     btn.innerText = "لا توجد نتائج جديدة";
                     return;
                 }
 
-                currentFetchedList = mediaList;
+                currentFetchedList = cleanList;
                 applyFilters();
 
-                // إضافة المعروض إلى قائمة الاستبعاد لتجنب تكرارها مستقبلاً
-                mediaList.forEach(item => excludedSet.add(item.id));
+                // تسجيل المانهوات المجلوبة لمنع تكرارها مستقبلاً
+                cleanList.forEach(item => excludedSet.add(item.id));
                 updateUIBadges();
 
                 btn.innerText = "عرض 50 مانهوا جديدة ➔";
