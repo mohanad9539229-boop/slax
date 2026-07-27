@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SLAX MANHWA AI - 15,000</title>
+    <title>SLAX MANHWA AI - 100K EDITION</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -141,7 +141,6 @@
             gap: 1.4rem;
         }
 
-        /* تحسين تصميم البطاقات */
         .card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -285,12 +284,12 @@
 
     <header>
         <h1>SLAX <span>MANHWA AI</span></h1>
-        <p>مكتبة ضخمة تضم 15,000 مانهوا بتصاميم حديثة وبسرعة فائقة</p>
+        <p>عملاق المانهوا الرقمي (100,000 مانهوا - سرعة صاروخية بدون تعليق)</p>
     </header>
 
     <div class="search-container">
         <select id="genreSelect">
-            <option value="all">كل التصنيفات (15,000 مانهوا 🔥)</option>
+            <option value="all">كل التصنيفات (100,000 مانهوا 🔥)</option>
             <option value="action">أكشن وترقية (Action & System)</option>
             <option value="fantasy">فانتازيا وسحر (Fantasy)</option>
             <option value="murim">موريم وفنون قتالية (Murim)</option>
@@ -312,7 +311,7 @@
     </div>
 
     <script>
-        const injectedManhwa = {
+        const baseTitles = {
             action: [
                 "Solo Leveling", "Omniscient Reader's Viewpoint", "Legend of the Northern Blade", 
                 "Eleceed", "Nano Machine", "Infinite Leveling in the Murim", "The Breaker", 
@@ -353,7 +352,27 @@
             ]
         };
 
-        // غلاف SVG محسن بتصاميم سينمائية حديثة (Gradients & Glow)
+        const TOTAL_COUNT = 100000;
+        const genres = Object.keys(baseTitles);
+
+        // توليد البطاقة ديناميكياً فقط لحظة الطلب لتجنب استهلاك الرام
+        function getItem(index) {
+            const genre = genres[index % genres.length];
+            const list = baseTitles[genre];
+            const baseTitle = list[index % list.length];
+            const cycle = Math.floor(index / (genres.length * list.length));
+            const title = cycle === 0 ? baseTitle : `${baseTitle} (Part ${cycle + 1})`;
+            const score = (8.0 + ((index * 13) % 20) / 10).toFixed(1);
+            
+            return {
+                id: index + 1,
+                title: title,
+                genre: genre,
+                score: score,
+                img: getDynamicCover(title, genre, index + 1)
+            };
+        }
+
         function getDynamicCover(title, genre, id) {
             const themes = {
                 action: { bg1: '#8a0000', bg2: '#140003', accent: '#ff334b', name: 'ACTION' },
@@ -378,20 +397,12 @@
                         <stop offset="100%" stop-color="rgba(0,0,0,0.4)" />
                     </linearGradient>
                 </defs>
-
-                <!-- خلفية سينمائية -->
                 <rect width="210" height="270" fill="url(#bg_${id})" />
                 <circle cx="105" cy="110" r="70" fill="${t.accent}" opacity="0.15" />
                 <rect width="210" height="270" fill="url(#overlay_${id})" />
-
-                <!-- إطار إبداعي -->
                 <rect x="8" y="8" width="194" height="254" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" rx="10" />
-
-                <!-- شارة التصنيف الزجاجية -->
-                <rect x="15" y="15" width="75" height="20" rx="10" fill="rgba(255,255,255,0.12)" backdrop-filter="blur(5px)" />
-                <text x="52.5" y="29" font-family="'Tajawal', sans-serif" font-size="9" fill="#fff" font-weight="900" text-anchor="middle">${t.name}</text>
-
-                <!-- عنوان المانهوا -->
+                <rect x="15" y="15" width="85" height="20" rx="10" fill="rgba(255,255,255,0.12)" backdrop-filter="blur(5px)" />
+                <text x="57.5" y="29" font-family="'Tajawal', sans-serif" font-size="9" fill="#fff" font-weight="900" text-anchor="middle">${t.name}</text>
                 <text x="105" y="130" font-family="'Tajawal', sans-serif" font-size="13" fill="#ffffff" font-weight="bold" text-anchor="middle">
                     <tspan x="105" dy="0">${title.substring(0, 20)}</tspan>
                     <tspan x="105" dy="17">${title.length > 20 ? title.substring(20, 40) : ''}</tspan>
@@ -401,62 +412,34 @@
             return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
         }
 
-        let manhwaDB = [];
-        let idCounter = 1;
-
-        // توليد 15,000 عنصر
-        function build15KDB() {
-            const genres = Object.keys(injectedManhwa);
-            const totalTarget = 15000;
-
-            for (let i = 0; i < totalTarget; i++) {
-                const genre = genres[i % genres.length];
-                const list = injectedManhwa[genre];
-                const baseTitle = list[i % list.length];
-                
-                const repeatCount = Math.floor(i / (genres.length * list.length));
-                const finalTitle = repeatCount === 0 ? baseTitle : `${baseTitle} (Vol. ${repeatCount + 1})`;
-                const score = (8.0 + ((i * 17) % 20) / 10).toFixed(1);
-                
-                manhwaDB.push({
-                    id: idCounter,
-                    title: finalTitle,
-                    genre: genre,
-                    score: score,
-                    img: getDynamicCover(finalTitle, genre, idCounter)
-                });
-                idCounter++;
-            }
-        }
-
-        build15KDB();
-
         let selectedList = new Set();
         let currentPage = 1;
-        const itemsPerPage = 28; // عرض 28 بطاقة في الدفعة
-        let currentFilteredList = [];
+        const itemsPerPage = 28;
+        let activeFilter = 'all';
 
         function resetAndSearch() {
             currentPage = 1;
             document.getElementById('resultsGrid').innerHTML = '';
-            
-            const genre = document.getElementById('genreSelect').value;
-            currentFilteredList = genre === 'all' 
-                ? manhwaDB 
-                : manhwaDB.filter(item => item.genre === genre);
-
+            activeFilter = document.getElementById('genreSelect').value;
             renderPage();
         }
 
         function renderPage() {
             const resultsGrid = document.getElementById('resultsGrid');
-            const start = (currentPage - 1) * itemsPerPage;
-            const end = start + itemsPerPage;
-            const itemsToRender = currentFilteredList.slice(start, end);
-
             const fragment = document.createDocumentFragment();
 
-            itemsToRender.forEach(item => {
+            let renderedCount = 0;
+            let index = (currentPage - 1) * itemsPerPage;
+
+            while (renderedCount < itemsPerPage && index < TOTAL_COUNT) {
+                const item = getItem(index);
+                index++;
+
+                if (activeFilter !== 'all' && item.genre !== activeFilter) {
+                    continue;
+                }
+
+                renderedCount++;
                 const card = document.createElement('div');
                 card.className = 'card' + (selectedList.has(item.title) ? ' selected' : '');
 
@@ -486,12 +469,12 @@
                 };
 
                 fragment.appendChild(card);
-            });
+            }
 
             resultsGrid.appendChild(fragment);
 
             const loadMoreBtn = document.getElementById('loadMoreBtn');
-            if (end >= currentFilteredList.length) {
+            if (index >= TOTAL_COUNT) {
                 loadMoreBtn.style.display = 'none';
             } else {
                 loadMoreBtn.style.display = 'block';
