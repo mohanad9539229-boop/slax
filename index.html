@@ -224,7 +224,7 @@
 
     <header>
         <h1>SLAX <span>MANHWA AI</span></h1>
-        <p>1000 مانهوا بأسماء حقيقية وتصاميم أغطية فائقة السرعة</p>
+        <p>1000 مانهوا محقونة بأسماء أصلية وخفيفة بدون تعليق</p>
     </header>
 
     <div class="search-container">
@@ -251,50 +251,56 @@
     </div>
 
     <script>
-        // قائمة بأسماء مانهوات حقيقية ومشهورة جداً
-        const realManhwaList = {
+        // حقن قائمة الأسماء المباشرة الحقيقية والمشهورة جداً
+        const injectedManhwa = {
             action: [
                 "Solo Leveling", "Omniscient Reader's Viewpoint", "Legend of the Northern Blade", 
                 "Eleceed", "Nano Machine", "Infinite Leveling in the Murim", "The Breaker", 
                 "Pick Me Up! Infinite Gacha", "Kill the Hero", "Doom Breaker", "Superhuman Era", 
-                "Leveling With the Gods", "SXL Leveling", "Tower of God", "The God of High School",
-                "Mercenary Enrollment", "Study Group", "Castle", "Manager Kim", "Lookism"
+                "Leveling With the Gods", "Tower of God", "The God of High School", "Mercenary Enrollment", 
+                "Study Group", "Castle", "Manager Kim", "Lookism", "Viral Hit", "Reality Quest", 
+                "Quest Supremacy", "Hanlim Gym", "Juvenile Offender", "God of Blackfield"
             ],
             fantasy: [
                 "The Beginning After The End", "The Greatest Estate Developer", "The S-Ranks That I Raised", 
                 "Overgeared", "Hardcore Leveling Warrior", "Second Life Ranker", "The Archmage Returns After 4000 Years", 
                 "Magic Emperor", "Survival Story of a Sword King", "The Skeleton Soldier Failed to Defend the Dungeon",
                 "A Returner's Magic Should Be Special", "Trash of the Count's Family", "Dungeon House",
-                "I Am the Fated Villain", "Solo Max-Level Newbie", "Ranker Who Lives a Second Time"
+                "I Am the Fated Villain", "Solo Max-Level Newbie", "Ranker Who Lives a Second Time", 
+                "The Player That Can't Level Up", "The Lone Necromancer", "Tomb Raider King", "The Novel's Extra"
             ],
             murim: [
                 "Return of the Mount Hua Sect", "Volcanic Age", "Wandering Warrior of Wudang", 
                 "Gosu", "Peerless Dad", "Murim Login", "Reaper of the Drifting Moon", 
                 "Chronicles of Heavenly Demon", "Legend of Asura - The Venom Dragon", "Demon in Mount Hua",
-                "The Heavenly Demon Can’t Live a Normal Life", "Memoirs of the King of War", "Master of Lightning Knives"
+                "The Heavenly Demon Can’t Live a Normal Life", "Memoirs of the King of War", "Master of Lightning Knives",
+                "Champion's Path to Murim", "Poison Dragon: Legend of an Asura", "Infinite Leveling Murim",
+                "Bowblade Spirit", "Star Instructor, Master Baek", "Absolute Sword Sense"
             ],
             reincarnation: [
                 "Damn Reincarnation", "Doctor’s Rebirth", "Past Life Regressor", "Reborn Rich", 
                 "The Dark Magician Transmigrates After 66666 Years", "Reincarnation of the Suicidal Battle God", 
                 "Academy’s Undercover Professor", "Swordmaster’s Youngest Son", "The Lord’s Coins Aren’t Decreasing!",
-                "Standard of Reincarnation", "Real Man", "I Shall Live As a Prince"
+                "Standard of Reincarnation", "Real Man", "I Shall Live As a Prince", "Infinite Mage",
+                "Reborn as the Enemy Prince", "The Lazy Lord Masters the Sword", "I Regressed As The Duke"
             ],
             romance: [
                 "Villains Are Destined to Die", "A Business Proposal", "Who Made Me a Princess", 
                 "The Remarried Empress", "Light and Shadow", "My In-Laws Are Obsessed With Me", 
                 "Father, I Don't Want this Marriage!", "Secret Playlist", "Unholy Blood", "True Beauty",
-                "How to Get My Husband on My Side", "Beware the Villainess!", "See You in My 19th Life"
+                "How to Get My Husband on My Side", "Beware the Villainess!", "See You in My 19th Life",
+                "I Shall Master This Family", "Death Is the Only Ending for the Villainess", "Operating Room Romance"
             ]
         };
 
-        // توليد غلاف ديناميكي ملون ومصمم بـ SVG بدلاً من روابط النت الخارجية التي تعطل وتفشل
-        function createCoverImage(title, genre, id) {
+        // توليد صورة غلاف ديناميكية وخفيفة جداً من خلال SVG محلي لضمان سرعة التحميل وعدم التعليق
+        function getDynamicCover(title, genre, id) {
             const colors = {
-                action: ['#bf0000', '#2b0000'],
-                fantasy: ['#4a00e0', '#8e2de2'],
-                murim: ['#d4af37', '#1a1a00'],
-                reincarnation: ['#00b4db', '#0083b0'],
-                romance: ['#ff758c', '#ff7eb3']
+                action: ['#bf0000', '#1a0000'],
+                fantasy: ['#4a00e0', '#200050'],
+                murim: ['#d4af37', '#1a1800'],
+                reincarnation: ['#00b4db', '#004050'],
+                romance: ['#ff758c', '#500020']
             };
             const [c1, c2] = colors[genre] || ['#ff2a4b', '#111'];
 
@@ -307,48 +313,47 @@
                     </linearGradient>
                 </defs>
                 <rect width="200" height="260" fill="url(#g_${id})" />
-                <rect x="10" y="10" width="180" height="240" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2" rx="6" />
-                <text x="100" y="50" font-family="sans-serif" font-size="12" fill="#00ff88" font-weight="bold" text-anchor="middle">#${id}</text>
-                <text x="100" y="120" font-family="sans-serif" font-size="14" fill="#ffffff" font-weight="bold" text-anchor="middle" width="160">
-                    <tspan x="100" dy="0">${title.substring(0, 18)}</tspan>
-                    <tspan x="100" dy="18">${title.length > 18 ? title.substring(18, 36) : ''}</tspan>
+                <rect x="8" y="8" width="184" height="244" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2" rx="6" />
+                <text x="100" y="45" font-family="Tajawal, sans-serif" font-size="11" fill="#00ff88" font-weight="bold" text-anchor="middle">#${id}</text>
+                <text x="100" y="115" font-family="Tajawal, sans-serif" font-size="13" fill="#ffffff" font-weight="bold" text-anchor="middle">
+                    <tspan x="100" dy="0">${title.substring(0, 19)}</tspan>
+                    <tspan x="100" dy="18">${title.length > 19 ? title.substring(19, 38) : ''}</tspan>
                 </text>
-                <rect x="50" y="200" width="100" height="22" rx="11" fill="rgba(0,0,0,0.5)" />
-                <text x="100" y="215" font-family="sans-serif" font-size="11" fill="#fff" text-anchor="middle">${genre.toUpperCase()}</text>
+                <rect x="40" y="205" width="120" height="22" rx="11" fill="rgba(0,0,0,0.6)" />
+                <text x="100" y="220" font-family="Tajawal, sans-serif" font-size="10" fill="#fff" text-anchor="middle">${genre.toUpperCase()}</text>
             </svg>`;
 
             return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
         }
 
-        // إنشاء قاعدة بيانات تحتوي على 1000 مانهوا مع تنوع في الأجزاء والمستويات
+        // بناء قاعدة البيانات الـ 1000 تلقائياً مع تدوير الأسماء المحقونة
         let manhwaDB = [];
         let idCounter = 1;
 
-        function generateDB() {
-            const genres = Object.keys(realManhwaList);
+        function buildDB() {
+            const genres = Object.keys(injectedManhwa);
 
             for (let i = 0; i < 1000; i++) {
                 const genre = genres[i % genres.length];
-                const list = realManhwaList[genre];
+                const list = injectedManhwa[genre];
                 const baseTitle = list[i % list.length];
                 
-                // تنويع العناوين إذا تكررت لتبدو كقائمة ضخمة حقيقية
-                const cycle = Math.floor(i / (genres.length * list.length));
-                const fullTitle = cycle === 0 ? baseTitle : `${baseTitle} (Part ${cycle + 1})`;
-                const score = (8.0 + ((i * 13) % 20) / 10).toFixed(1);
+                const repeatCount = Math.floor(i / (genres.length * list.length));
+                const finalTitle = repeatCount === 0 ? baseTitle : `${baseTitle} (Vol. ${repeatCount + 1})`;
+                const score = (8.2 + ((i * 11) % 17) / 10).toFixed(1);
                 
                 manhwaDB.push({
                     id: idCounter,
-                    title: fullTitle,
+                    title: finalTitle,
                     genre: genre,
                     score: `⭐ ${score}`,
-                    img: createCoverImage(fullTitle, genre, idCounter)
+                    img: getDynamicCover(finalTitle, genre, idCounter)
                 });
                 idCounter++;
             }
         }
 
-        generateDB();
+        buildDB();
 
         let selectedList = new Set();
         let currentPage = 1;
