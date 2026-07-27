@@ -3,347 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SLAX MANHWA - ULTRA DATABASE</title>
+    <title>SLAX MANHWA - ANILIST LIVE</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #09090c;
             --card-bg: #121217;
             --accent-color: #ff2a4b;
-            --accent-gradient: linear-gradient(135deg, #ff2a4b, #ff758c);
             --border-color: #1f1f28;
-            --border-hover: rgba(255, 42, 75, 0.5);
             --selected-color: #00ff88;
             --text-color: #ffffff;
             --text-dim: #8e8e9e;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Tajawal', sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 2rem 1rem 5rem 1rem;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        header h1 {
-            font-size: 2.8rem;
-            font-weight: 900;
-        }
-
-        header h1 span {
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .search-container {
-            width: 100%;
-            max-width: 700px;
-            display: flex;
-            gap: 12px;
-            margin-bottom: 1.5rem;
-        }
-
-        input, select, button {
-            padding: 0.85rem 1.2rem;
-            border-radius: 10px;
-            font-size: 1rem;
-            border: 1px solid var(--border-color);
-            outline: none;
-        }
-
-        input {
-            flex: 2;
-            background-color: var(--card-bg);
-            color: var(--text-color);
-        }
-
-        select {
-            flex: 1;
-            background-color: var(--card-bg);
-            color: var(--text-color);
-        }
-
-        .selection-bar {
-            width: 100%;
-            max-width: 1200px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 0.9rem 1.4rem;
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.8rem;
-        }
-
-        .selection-count {
-            font-weight: bold;
-            color: var(--selected-color);
-        }
-
-        .action-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            padding: 0.6rem 1.2rem;
-            border-radius: 8px;
-            cursor: pointer;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-color); min-height: 100vh; padding: 2rem 1rem; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { font-size: 2.5rem; font-weight: 900; }
+        header h1 span { color: var(--accent-color); }
 
         .results-grid {
             width: 100%;
             max-width: 1200px;
+            margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-            gap: 1.4rem;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.2rem;
         }
 
         .card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 14px;
+            border-radius: 12px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            cursor: pointer;
             position: relative;
+            cursor: pointer;
             transition: transform 0.2s ease, border-color 0.2s ease;
         }
 
-        .card:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-4px);
-        }
+        .card:hover { transform: translateY(-4px); border-color: var(--accent-color); }
+        .card.selected { border-color: var(--selected-color) !important; }
 
-        .card.selected {
-            border-color: var(--selected-color) !important;
-        }
+        .card-img-wrapper { width: 100%; height: 280px; background-color: #181820; }
+        .card img { width: 100%; height: 100%; object-fit: cover; }
 
-        .card-checkbox {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 26px;
-            height: 26px;
-            background: rgba(0, 0, 0, 0.6);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            color: transparent;
-            z-index: 3;
-        }
-
-        .card.selected .card-checkbox {
-            background: var(--selected-color);
-            border-color: var(--selected-color);
-            color: #000;
-            font-weight: bold;
-        }
-
-        .card-img-wrapper {
-            width: 100%;
-            height: 270px;
-            background-color: #181820;
-        }
-
-        .card-content {
-            padding: 0.9rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .card-title {
-            font-size: 0.95rem;
-            font-weight: 700;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .pagination {
-            display: flex;
-            gap: 10px;
-            margin-top: 2rem;
-            align-items: center;
-        }
-
-        .pagination button {
-            background: var(--card-bg);
-            color: var(--text-color);
-            cursor: pointer;
-        }
-
-        .pagination button:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-        }
+        .card-content { padding: 0.8rem; display: flex; flex-direction: column; gap: 0.4rem; }
+        .card-title { font-size: 0.9rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .card-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; }
+        .score { color: #ffd700; font-weight: bold; }
+        .genre { color: var(--text-dim); background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; }
+        
+        .loading { text-align: center; font-size: 1.2rem; color: var(--text-dim); margin-top: 3rem; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>SLAX <span>HIGH-PERFORMANCE</span></h1>
-        <p id="totalInfo">جاري تحميل البيانات...</p>
+        <h1>SLAX <span>ANILIST API</span></h1>
+        <p>بيانات حقيقية وبث مباشر من AniList GraphQL</p>
     </header>
 
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="ابحث في الآلاف من المانهوات..." oninput="handleSearch()">
-        <select id="genreSelect" onchange="handleSearch()">
-            <option value="all">كل التصنيفات</option>
-            <option value="action">أكشن وترقية</option>
-            <option value="fantasy">فانتازيا</option>
-            <option value="murim">موريم</option>
-            <option value="reincarnation">تجسد</option>
-            <option value="romance">رومانسي</option>
-        </select>
-    </div>
-
-    <div class="selection-bar">
-        <div>المحدد حالياً: <span class="selection-count" id="selectCount">0</span> مانهوا</div>
-        <button class="action-btn" onclick="copySelected()">نسخ المختارة 📋</button>
-    </div>
-
-    <div class="results-grid" id="resultsGrid"></div>
-
-    <div class="pagination">
-        <button id="prevBtn" onclick="changePage(-1)">السابق</button>
-        <span id="pageIndicator">صفحة 1 من 1</span>
-        <button id="nextBtn" onclick="changePage(1)">التالي</button>
+    <div class="results-grid" id="resultsGrid">
+        <div class="loading">جاري جلب بيانات المانهوا المباشرة...</div>
     </div>
 
     <script>
-        // هنا تقدر تضيف مئات أو آلاف المانهوات في المصفوفة بدون أي بطء
-        const realManhwaList = [
-            { title: "Solo Leveling", genre: "action", score: "9.8" },
-            { title: "Omniscient Reader's Viewpoint", genre: "action", score: "9.7" },
-            { title: "Legend of the Northern Blade", genre: "action", score: "9.6" },
-            { title: "Eleceed", genre: "action", score: "9.6" },
-            { title: "Nano Machine", genre: "action", score: "9.5" },
-            { title: "The Breaker", genre: "action", score: "9.4" },
-            { title: "Pick Me Up! Infinite Gacha", genre: "action", score: "9.3" },
-            { title: "Superhuman Era", genre: "action", score: "9.5" },
-            { title: "Leveling With the Gods", genre: "action", score: "9.2" },
-            { title: "Tower of God", genre: "action", score: "9.4" },
-            { title: "The Beginning After The End", genre: "fantasy", score: "9.6" },
-            { title: "The Greatest Estate Developer", genre: "fantasy", score: "9.8" },
-            { title: "Overgeared", genre: "fantasy", score: "9.3" },
-            { title: "Return of the Mount Hua Sect", genre: "murim", score: "9.7" },
-            { title: "Murim Login", genre: "murim", score: "9.5" },
-            { title: "Gosu", genre: "murim", score: "9.4" },
-            { title: "Damn Reincarnation", genre: "reincarnation", score: "9.4" },
-            { title: "Swordmaster’s Youngest Son", genre: "reincarnation", score: "9.3" },
-            { title: "Villains Are Destined to Die", genre: "romance", score: "9.6" },
-            { title: "The Remarried Empress", genre: "romance", score: "9.4" }
-            // تقدر تستمر بإضافة آلاف العناصر هنا بسهولة...
-        ];
+        // دالة جلب البيانات من AniList مباشرة
+        async function fetchManhwa() {
+            const query = `
+            query {
+              Page(page: 1, perPage: 20) {
+                media(type: MANGA, countryOfOrigin: "KR", sort: SCORE_DESC) {
+                  id
+                  title { english romaji }
+                  coverImage { large }
+                  averageScore
+                  genres
+                }
+              }
+            }`;
 
-        let currentPage = 1;
-        const itemsPerPage = 24; // عدد المانهوات العارضة في الصفحة الواحدة للحفاظ على سرعة الـ DOM
-        let filteredData = [...realManhwaList];
-        let selectedList = new Set();
+            try {
+                const response = await fetch('https://graphql.anilist.co', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({ query })
+                });
 
-        function getSVG(title, genre, id) {
-            const colors = {
-                action: '#8a0000', fantasy: '#3b008a', murim: '#7a5200', 
-                reincarnation: '#005f73', romance: '#8a004b'
-            };
-            const bg = colors[genre] || '#222';
-            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="210" height="270"><rect width="100%" height="100%" fill="${bg}"/><text x="50%" y="50%" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">${title.substring(0, 18)}</text></svg>`;
-            return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+                const result = await response.json();
+                renderCards(result.data.Page.media);
+            } catch (error) {
+                document.getElementById('resultsGrid').innerHTML = '<div class="loading">حدث خطأ أثناء تحميل البيانات!</div>';
+            }
         }
 
-        function handleSearch() {
-            const searchVal = document.getElementById('searchInput').value.toLowerCase();
-            const genreVal = document.getElementById('genreSelect').value;
-
-            filteredData = realManhwaList.filter(item => {
-                const matchesSearch = item.title.toLowerCase().includes(searchVal);
-                const matchesGenre = genreVal === 'all' || item.genre === genreVal;
-                return matchesSearch && matchesGenre;
-            });
-
-            currentPage = 1;
-            render();
-        }
-
-        function render() {
+        // دالة عرض البطاقات ببيانات الـ JSON المرجعة
+        function renderCards(manhwaList) {
             const grid = document.getElementById('resultsGrid');
             grid.innerHTML = '';
 
-            const start = (currentPage - 1) * itemsPerPage;
-            const end = start + itemsPerPage;
-            const pageItems = filteredData.slice(start, end);
+            manhwaList.forEach(item => {
+                const title = item.title.english || item.title.romaji;
+                const cover = item.coverImage.large;
+                const score = item.averageScore ? (item.averageScore / 10).toFixed(1) : 'N/A';
+                const genre = item.genres[0] || 'Manhwa';
 
-            pageItems.forEach((item, index) => {
                 const card = document.createElement('div');
-                card.className = 'card' + (selectedList.has(item.title) ? ' selected' : '');
-                
+                card.className = 'card';
                 card.innerHTML = `
-                    <div class="card-checkbox">✓</div>
                     <div class="card-img-wrapper">
-                        <img src="${getSVG(item.title, item.genre, start + index)}" width="210" height="270" loading="lazy">
+                        <img src="${cover}" alt="${title}" loading="lazy">
                     </div>
                     <div class="card-content">
-                        <div class="card-title" title="${item.title}">${item.title}</div>
-                        <div style="font-size: 0.8rem; color: #ffd700;">⭐ ${item.score}</div>
+                        <div class="card-title" title="${title}">${title}</div>
+                        <div class="card-meta">
+                            <span class="score">⭐ ${score}</span>
+                            <span class="genre">${genre}</span>
+                        </div>
                     </div>
                 `;
 
-                card.onclick = () => {
-                    if (selectedList.has(item.title)) {
-                        selectedList.delete(item.title);
-                        card.classList.remove('selected');
-                    } else {
-                        selectedList.add(item.title);
-                        card.classList.add('selected');
-                    }
-                    document.getElementById('selectCount').innerText = selectedList.size;
-                };
-
+                card.onclick = () => card.classList.toggle('selected');
                 grid.appendChild(card);
             });
-
-            // تحديث أزرار التنقل ومعلومات الصفحة
-            const totalPages = Math.ceil(filteredData.length / itemsPerPage) || 1;
-            document.getElementById('pageIndicator').innerText = `صفحة ${currentPage} من ${totalPages}`;
-            document.getElementById('prevBtn').disabled = currentPage === 1;
-            document.getElementById('nextBtn').disabled = currentPage === totalPages;
-            document.getElementById('totalInfo').innerText = `إجمالي المانهوات في القائمة: (${filteredData.length})`;
         }
 
-        function changePage(step) {
-            currentPage += step;
-            render();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function copySelected() {
-            if (selectedList.size === 0) return alert('اختر مانهوا أولاً!');
-            navigator.clipboard.writeText(Array.from(selectedList).join('\n'));
-            alert('تم النسخ بنجاح!');
-        }
-
-        window.onload = handleSearch;
+        window.onload = fetchManhwa;
     </script>
 </body>
 </html>
