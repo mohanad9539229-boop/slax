@@ -2,28 +2,28 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SLAX Manhwa Hub v3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SLAX Manhwa Hub v3.1</title>
     <style>
         :root {
-            --bg-color: #0b0b0e;
-            --card-bg: #14141c;
+            --bg-color: #0d0d12;
+            --card-bg: #15151d;
             --accent-color: #ff2a4b;
             --accent-hover: #d91e3d;
-            --border-color: #222230;
+            --border-color: #232330;
             --text-color: #ffffff;
             --text-dim: #9a9ab0;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-color); padding: 2rem 1rem; text-align: center; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg-color); color: var(--text-color); padding: 1.5rem 0.8rem; text-align: center; min-height: 100vh; }
 
         .container { max-width: 1200px; margin: 0 auto; }
         
-        header { margin-bottom: 2rem; }
-        h1 { font-size: 2.2rem; font-weight: 800; letter-spacing: 1px; }
+        header { margin-bottom: 1.5rem; }
+        h1 { font-size: 2rem; font-weight: 800; letter-spacing: 1px; }
         h1 span { color: var(--accent-color); }
-        p.sub { color: var(--text-dim); margin-top: 0.4rem; font-size: 0.95rem; }
+        p.sub { color: var(--text-dim); margin-top: 0.3rem; font-size: 0.85rem; }
 
         .controls {
             display: flex;
@@ -31,19 +31,21 @@
             gap: 10px;
             justify-content: center;
             align-items: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
+            padding: 0 0.5rem;
         }
 
         input[type="text"] {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             color: #fff;
-            padding: 0.8rem 1.2rem;
+            padding: 0.75rem 1rem;
             border-radius: 8px;
             outline: none;
             width: 100%;
-            max-width: 300px;
-            font-size: 0.95rem;
+            max-width: 280px;
+            font-size: 0.9rem;
+            text-align: right;
         }
 
         input[type="text"]:focus { border-color: var(--accent-color); }
@@ -52,26 +54,28 @@
             background-color: var(--accent-color);
             color: white;
             border: none;
-            padding: 0.8rem 1.6rem;
+            padding: 0.75rem 1.4rem;
             border-radius: 8px;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            gap: 6px;
+            text-decoration: none;
         }
 
-        .btn:hover { background-color: var(--accent-hover); transform: translateY(-1px); }
-        .btn:disabled { background-color: #2a2a38; color: #666; cursor: not-allowed; transform: none; }
+        .btn:hover { background-color: var(--accent-hover); }
+        .btn:disabled { background-color: #2a2a38; color: #666; cursor: not-allowed; }
         .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-dim); }
         .btn-outline:hover { background: var(--card-bg); color: #fff; }
 
         .counter-badge {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            padding: 0.8rem 1.2rem;
+            padding: 0.75rem 1rem;
             border-radius: 8px;
             font-size: 0.85rem;
             color: var(--text-dim);
@@ -79,8 +83,12 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 1.2rem;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        @media (min-width: 600px) {
+            .grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
         }
 
         .card {
@@ -93,34 +101,33 @@
             text-align: right;
             transition: transform 0.2s ease, border-color 0.2s ease;
             cursor: pointer;
-            position: relative;
         }
 
-        .card:hover { transform: translateY(-4px); border-color: var(--accent-color); }
-        .card img { width: 100%; height: 250px; object-fit: cover; background: #1a1a24; }
-        .card-info { padding: 0.8rem; display: flex; flex-direction: column; gap: 0.4rem; }
-        .card-title { font-size: 0.9rem; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .card:hover { transform: translateY(-3px); border-color: var(--accent-color); }
+        .card img { width: 100%; height: 220px; object-fit: cover; background: #1a1a24; }
+        .card-info { padding: 0.7rem; display: flex; flex-direction: column; gap: 0.3rem; }
+        .card-title { font-size: 0.85rem; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
         .card-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
         .score { color: #ffd700; font-weight: bold; }
-        .genres { font-size: 0.75rem; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .genres { font-size: 0.7rem; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
         /* Modal / النافذة المنبثقة */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(6px);
             display: none;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
+            z-index: 99999;
             padding: 1rem;
         }
 
@@ -130,46 +137,72 @@
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            max-width: 650px;
+            max-width: 550px;
             width: 100%;
-            max-height: 90vh;
+            max-height: 85vh;
             overflow-y: auto;
             text-align: right;
-            padding: 1.5rem;
+            padding: 1.2rem;
             position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            animation: popIn 0.25s ease;
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         .modal-close {
             position: absolute;
-            top: 1rem; left: 1rem;
+            top: 0.8rem; left: 0.8rem;
             background: transparent;
             border: none;
             color: var(--text-dim);
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             cursor: pointer;
+            line-height: 1;
         }
 
-        .modal-header { display: flex; gap: 1.2rem; margin-bottom: 1rem; }
-        .modal-header img { width: 120px; height: 170px; object-fit: cover; border-radius: 8px; }
-        .modal-details { display: flex; flex-direction: column; gap: 0.5rem; justify-content: center; }
-        .modal-title { font-size: 1.2rem; font-weight: bold; color: #fff; }
-        .modal-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.5; margin-bottom: 1rem; max-height: 150px; overflow-y: auto; }
+        .modal-header { display: flex; gap: 1rem; margin-bottom: 1rem; }
+        .modal-header img { width: 110px; height: 155px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+        .modal-details { display: flex; flex-direction: column; gap: 0.4rem; justify-content: center; }
+        .modal-title { font-size: 1.1rem; font-weight: bold; color: #fff; line-height: 1.3; }
+        .modal-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.5; margin-bottom: 1rem; max-height: 140px; overflow-y: auto; padding-right: 5px; }
 
-        .modal-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+        .modal-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        /* Toast الإشعارات */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background-color: var(--accent-color);
+            color: #fff;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
+            z-index: 100000;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
     </style>
 </head>
 <body>
 
     <div class="container">
         <header>
-            <h1>SLAX <span>MANHWA HUB V3</span></h1>
-            <p class="sub">استكشاف المانهوات مع نظام استبعاد تلقائي وفلترة مخصصة</p>
+            <h1>SLAX <span>MANHWA HUB</span></h1>
+            <p class="sub">عرض 50 مانهوا جديدة بدون تكرار مع كافة الميزات التفاعلية</p>
         </header>
         
         <div class="controls">
-            <input type="text" id="searchInput" placeholder="بحث بالاسم..." oninput="filterLocalResults()">
-            <button class="btn" id="loadBtn" onclick="fetchUniqueManhwa()">جلب دفعات جديدة ➔</button>
+            <input type="text" id="searchInput" placeholder="بحث بالاسم في الصفحة..." oninput="filterLocalResults()">
+            <button class="btn" id="loadBtn" onclick="fetchUniqueManhwa()">عرض 50 مانهوا جديدة ➔</button>
+
             <button class="btn btn-outline" onclick="resetExclusions()">إعادة ضبط القائمة</button>
             <div class="counter-badge" id="excludedCount">المستبعدة: 0</div>
         </div>
@@ -178,7 +211,7 @@
     </div>
 
     <!-- Modal التفاصيل -->
-    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
         <div class="modal" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeModal()">&times;</button>
             <div class="modal-header">
@@ -191,13 +224,17 @@
             </div>
             <div class="modal-desc" id="modalDesc">الوصف غير متوفر حالياً.</div>
             <div class="modal-actions">
-                <button class="btn" onclick="copyTitle()">نسخ الاسم</button>
-                <a id="searchGoogleBtn" target="_blank" class="btn btn-outline">بحث في Google</a>
+                <button class="btn" onclick="copyTitle()">📋 نسخ الاسم</button>
+                <a id="searchGoogleBtn" target="_blank" class="btn btn-outline">🔍 بحث في Google</a>
             </div>
         </div>
     </div>
 
+    <!-- Toast -->
+    <div class="toast" id="toast">تم النسخ بنجاح!</div>
+
     <script>
+        // قائمة الـ 100 مانهوا المستبعدة بالكامل
         const initialExcluded = [
             136331, 137304, 117540, 130870, 97897, 115000, 151025, 103156, 137595, 119276, 
             177706, 113666, 130429, 141007, 120385, 116506, 175262, 75275, 117536, 52651, 
@@ -211,15 +248,22 @@
             130566, 166154, 135318, 124783, 133708, 87154, 137969, 180890, 150170, 139339
         ];
 
-        // تحميل المحفوظات من LocalStorage للربط التلقائي
         let savedExclusions = JSON.parse(localStorage.getItem('slax_excluded_ids')) || [];
         let excludedIds = Array.from(new Set([...initialExcluded, ...savedExclusions]));
         let currentFetchedList = [];
         let activeTitleForCopy = '';
+        let pageNumber = 1;
 
         function updateBadge() {
             document.getElementById('excludedCount').innerText = `المستبعدة: ${excludedIds.length}`;
             localStorage.setItem('slax_excluded_ids', JSON.stringify(excludedIds));
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
         }
 
         async function fetchUniqueManhwa() {
@@ -227,16 +271,17 @@
             btn.innerText = "جاري الجلب...";
             btn.disabled = true;
 
+            // تحديد perPage بشكل صريح داخل المتغيرات لضمان جلب 50 مانهوا
             const query = `
-            query GetMassiveManhwa($excluded: [Int]) {
-              Page(page: 1, perPage: 40) {
+            query GetMassiveManhwa($page: Int, $perPage: Int, $excluded: [Int]) {
+              Page(page: $page, perPage: $perPage) {
                 media(type: MANGA, countryOfOrigin: "KR", sort: POPULARITY_DESC, id_not_in: $excluded) {
                   id
                   title { english romaji }
                   coverImage { large }
                   averageScore
                   genres
-                  description(asHtml: false)
+                  description
                 }
               }
             }`;
@@ -247,15 +292,24 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         query: query,
-                        variables: { excluded: excludedIds }
+                        variables: { 
+                            page: 1, 
+                            perPage: 50, // إجبار السيرفر على إرجاع 50 مانهوا
+                            excluded: excludedIds 
+                        }
                     })
                 });
 
                 const result = await response.json();
+                
+                if (!result.data || !result.data.Page || !result.data.Page.media) {
+                    throw new Error("Invalid API Response");
+                }
+
                 const mediaList = result.data.Page.media;
 
-                if (!mediaList || mediaList.length === 0) {
-                    document.getElementById('manhwaGrid').innerHTML = '<p>تم عرض جميع المانهوات المتاحة!</p>';
+                if (mediaList.length === 0) {
+                    document.getElementById('manhwaGrid').innerHTML = '<p style="grid-column: 1/-1;">تم عرض جميع المانهوات المتاحة!</p>';
                     btn.innerText = "لا توجد نتائج جديدة";
                     return;
                 }
@@ -263,16 +317,18 @@
                 currentFetchedList = mediaList;
                 renderCards(mediaList);
 
-                // إضافة المعروض إلى قائمة الاستبعاد فوراً
-                mediaList.forEach(item => excludedIds.push(item.id));
+                // إضافة المعروض إلى مصفوفة الاستبعاد
+                mediaList.forEach(item => {
+                    if(!excludedIds.includes(item.id)) excludedIds.push(item.id);
+                });
                 updateBadge();
 
-                btn.innerText = "عرض مانهوات جديدة ➔";
+                btn.innerText = "عرض 50 مانهوا جديدة ➔";
                 btn.disabled = false;
 
             } catch (err) {
                 console.error(err);
-                btn.innerText = "حدث خطأ!";
+                btn.innerText = "حدث خطأ، اضغط لإعادة المحاولة";
                 btn.disabled = false;
             }
         }
@@ -284,7 +340,7 @@
             list.forEach(item => {
                 const title = item.title.english || item.title.romaji;
                 const score = item.averageScore ? (item.averageScore / 10).toFixed(1) : 'N/A';
-                const mainGenre = item.genres ? item.genres.slice(0, 2).join(', ') : 'Manhwa';
+                const mainGenre = item.genres && item.genres.length > 0 ? item.genres.slice(0, 2).join(', ') : 'Manhwa';
 
                 const card = document.createElement('div');
                 card.className = 'card';
@@ -304,10 +360,11 @@
         }
 
         function filterLocalResults() {
-            const term = document.getElementById('searchInput').value.toLowerCase();
+            const term = document.getElementById('searchInput').value.toLowerCase().trim();
             const filtered = currentFetchedList.filter(item => {
-                const t = (item.title.english || item.title.romaji).toLowerCase();
-                return t.includes(term);
+                const englishTitle = (item.title.english || '').toLowerCase();
+                const romajiTitle = (item.title.romaji || '').toLowerCase();
+                return englishTitle.includes(term) || romajiTitle.includes(term);
             });
             renderCards(filtered);
         }
@@ -316,27 +373,56 @@
             const title = item.title.english || item.title.romaji;
             activeTitleForCopy = title;
 
+            // تنظيف الوصف من نصوص HTML
+            let cleanDesc = item.description || 'لا يوجد وصف متوفر لهذه المانهوا.';
+            cleanDesc = cleanDesc.replace(/<[^>]*>?/gm, '');
+
             document.getElementById('modalImg').src = item.coverImage.large;
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('modalScore').innerText = `⭐ ${item.averageScore ? (item.averageScore / 10).toFixed(1) : 'N/A'}`;
             document.getElementById('modalGenres').innerText = item.genres ? item.genres.join(', ') : 'Manhwa';
-            document.getElementById('modalDesc').innerText = item.description || 'لا يوجد وصف متوفر لهذه المانهوا.';
+            document.getElementById('modalDesc').innerText = cleanDesc;
             document.getElementById('searchGoogleBtn').href = `https://www.google.com/search?q=${encodeURIComponent(title + ' manhwa')}`;
 
             document.getElementById('modalOverlay').classList.add('active');
         }
 
-        function closeModal(e) {
+        function closeModal() {
             document.getElementById('modalOverlay').classList.remove('active');
         }
 
+        // دالة نسخ تعمل على جميع الأجهزة
         function copyTitle() {
-            navigator.clipboard.writeText(activeTitleForCopy);
-            alert(`تم نسخ: "${activeTitleForCopy}"`);
+            if (!activeTitleForCopy) return;
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(activeTitleForCopy).then(() => {
+                    showToast("تم نسخ الاسم بنجاح!");
+                }).catch(() => fallbackCopy(activeTitleForCopy));
+            } else {
+                fallbackCopy(activeTitleForCopy);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-9999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                showToast("تم نسخ الاسم بنجاح!");
+            } catch (err) {
+                alert("اسم المانهوا: " + text);
+            }
+            document.body.removeChild(textArea);
         }
 
         function resetExclusions() {
-            if (confirm("هل تريد إعادة ضبط قائمة الاستبعاد إلى الـ 100 مانهوا الأساسية فقط؟")) {
+            if (confirm("هل تريد إعادة ضبط قائمة الاستبعاد وإلغاء المحفوظات؟")) {
                 localStorage.removeItem('slax_excluded_ids');
                 excludedIds = [...initialExcluded];
                 updateBadge();
