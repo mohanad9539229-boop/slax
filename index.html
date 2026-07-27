@@ -3,27 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SLAX Manhwa Hub v3.1</title>
+    <title>SLAX Manhwa Hub v4.0</title>
     <style>
         :root {
-            --bg-color: #0d0d12;
-            --card-bg: #15151d;
+            --bg-color: #0b0b10;
+            --card-bg: #14141c;
             --accent-color: #ff2a4b;
             --accent-hover: #d91e3d;
-            --border-color: #232330;
+            --border-color: #222230;
             --text-color: #ffffff;
             --text-dim: #9a9ab0;
+            --gold-color: #ffd700;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg-color); color: var(--text-color); padding: 1.5rem 0.8rem; text-align: center; min-height: 100vh; }
 
         .container { max-width: 1200px; margin: 0 auto; }
         
         header { margin-bottom: 1.5rem; }
-        h1 { font-size: 2rem; font-weight: 800; letter-spacing: 1px; }
+        h1 { font-size: 2.2rem; font-weight: 900; letter-spacing: 1px; }
         h1 span { color: var(--accent-color); }
-        p.sub { color: var(--text-dim); margin-top: 0.3rem; font-size: 0.85rem; }
+        p.sub { color: var(--text-dim); margin-top: 0.4rem; font-size: 0.9rem; }
 
         .controls {
             display: flex;
@@ -35,26 +36,27 @@
             padding: 0 0.5rem;
         }
 
-        input[type="text"] {
+        input[type="text"], select {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             color: #fff;
             padding: 0.75rem 1rem;
             border-radius: 8px;
             outline: none;
-            width: 100%;
-            max-width: 280px;
             font-size: 0.9rem;
             text-align: right;
         }
 
-        input[type="text"]:focus { border-color: var(--accent-color); }
+        input[type="text"] { width: 100%; max-width: 260px; }
+        select { cursor: pointer; min-width: 140px; }
+
+        input[type="text"]:focus, select:focus { border-color: var(--accent-color); }
 
         .btn {
             background-color: var(--accent-color);
             color: white;
             border: none;
-            padding: 0.75rem 1.4rem;
+            padding: 0.75rem 1.2rem;
             border-radius: 8px;
             font-size: 0.9rem;
             font-weight: bold;
@@ -71,6 +73,8 @@
         .btn:disabled { background-color: #2a2a38; color: #666; cursor: not-allowed; }
         .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-dim); }
         .btn-outline:hover { background: var(--card-bg); color: #fff; }
+        .btn-fav-tab { background-color: #251218; border: 1px solid var(--accent-color); color: var(--accent-color); }
+        .btn-fav-tab.active { background-color: var(--accent-color); color: #fff; }
 
         .counter-badge {
             background-color: var(--card-bg);
@@ -84,7 +88,7 @@
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 1rem;
+            gap: 1.1rem;
         }
 
         @media (min-width: 600px) {
@@ -94,36 +98,65 @@
         .card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             text-align: right;
-            transition: transform 0.2s ease, border-color 0.2s ease;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
             cursor: pointer;
+            position: relative;
         }
 
-        .card:hover { transform: translateY(-3px); border-color: var(--accent-color); }
-        .card img { width: 100%; height: 220px; object-fit: cover; background: #1a1a24; }
-        .card-info { padding: 0.7rem; display: flex; flex-direction: column; gap: 0.3rem; }
-        .card-title { font-size: 0.85rem; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .card:hover { 
+            transform: translateY(-5px); 
+            border-color: var(--accent-color); 
+            box-shadow: 0 8px 20px rgba(255, 42, 75, 0.2); 
+        }
+
+        .card img { width: 100%; height: 230px; object-fit: cover; background: #1a1a24; }
+        
+        .fav-btn-icon {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            border: none;
+            color: #fff;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.2s;
+        }
+
+        .fav-btn-icon.active { color: var(--accent-color); }
+        .fav-btn-icon:hover { transform: scale(1.15); }
+
+        .card-info { padding: 0.8rem; display: flex; flex-direction: column; gap: 0.4rem; }
+        .card-title { font-size: 0.88rem; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
         .card-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.75rem;
+            font-size: 0.78rem;
         }
 
-        .score { color: #ffd700; font-weight: bold; }
-        .genres { font-size: 0.7rem; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .score { color: var(--gold-color); font-weight: bold; }
+        .genres { font-size: 0.72rem; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        /* Modal / النافذة المنبثقة */
+        /* Modal */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(6px);
+            backdrop-filter: blur(8px);
             display: none;
             justify-content: center;
             align-items: center;
@@ -136,55 +169,55 @@
         .modal {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            max-width: 550px;
+            border-radius: 14px;
+            max-width: 560px;
             width: 100%;
             max-height: 85vh;
             overflow-y: auto;
             text-align: right;
-            padding: 1.2rem;
+            padding: 1.4rem;
             position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.9);
             animation: popIn 0.25s ease;
         }
 
         @keyframes popIn {
-            from { opacity: 0; transform: scale(0.95); }
+            from { opacity: 0; transform: scale(0.92); }
             to { opacity: 1; transform: scale(1); }
         }
 
         .modal-close {
             position: absolute;
-            top: 0.8rem; left: 0.8rem;
+            top: 0.9rem; left: 0.9rem;
             background: transparent;
             border: none;
             color: var(--text-dim);
-            font-size: 1.6rem;
+            font-size: 1.7rem;
             cursor: pointer;
             line-height: 1;
         }
 
         .modal-header { display: flex; gap: 1rem; margin-bottom: 1rem; }
-        .modal-header img { width: 110px; height: 155px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
-        .modal-details { display: flex; flex-direction: column; gap: 0.4rem; justify-content: center; }
-        .modal-title { font-size: 1.1rem; font-weight: bold; color: #fff; line-height: 1.3; }
-        .modal-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.5; margin-bottom: 1rem; max-height: 140px; overflow-y: auto; padding-right: 5px; }
+        .modal-header img { width: 115px; height: 165px; object-fit: cover; border-radius: 10px; flex-shrink: 0; }
+        .modal-details { display: flex; flex-direction: column; gap: 0.5rem; justify-content: center; }
+        .modal-title { font-size: 1.15rem; font-weight: bold; color: #fff; line-height: 1.35; }
+        .modal-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1.2rem; max-height: 140px; overflow-y: auto; padding-right: 5px; }
 
         .modal-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
-        /* Toast الإشعارات */
+        /* Toast */
         .toast {
             position: fixed;
-            bottom: 20px;
+            bottom: 25px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
             background-color: var(--accent-color);
             color: #fff;
-            padding: 0.7rem 1.5rem;
-            border-radius: 25px;
-            font-size: 0.85rem;
+            padding: 0.75rem 1.6rem;
+            border-radius: 30px;
+            font-size: 0.88rem;
             font-weight: bold;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.6);
             transition: transform 0.3s ease;
             z-index: 100000;
         }
@@ -195,14 +228,25 @@
 
     <div class="container">
         <header>
-            <h1>SLAX <span>MANHWA HUB</span></h1>
-            <p class="sub">عرض 50 مانهوا جديدة بدون تكرار مع كافة الميزات التفاعلية</p>
+            <h1>SLAX <span>MANHWA HUB v4.0</span></h1>
+            <p class="sub">تصفح المانهوا بدون تكرار مع إمكانية الفلترة ونظام المفضلة</p>
         </header>
         
         <div class="controls">
-            <input type="text" id="searchInput" placeholder="بحث بالاسم في الصفحة..." oninput="filterLocalResults()">
-            <button class="btn" id="loadBtn" onclick="fetchUniqueManhwa()">عرض 50 مانهوا جديدة ➔</button>
+            <input type="text" id="searchInput" placeholder="بحث بالاسم..." oninput="applyFilters()">
+            
+            <select id="genreSelect" onchange="applyFilters()">
+                <option value="ALL">جميع التصنيفات</option>
+                <option value="Action">أكشن (Action)</option>
+                <option value="Fantasy">خيال (Fantasy)</option>
+                <option value="Romance">رومانسية (Romance)</option>
+                <option value="Drama">دراما (Drama)</option>
+                <option value="Comedy">كوميديا (Comedy)</option>
+                <option value="Adventure">مغامرة (Adventure)</option>
+            </select>
 
+            <button class="btn" id="loadBtn" onclick="fetchUniqueManhwa()">عرض 50 مانهوا جديدة ➔</button>
+            <button class="btn btn-fav-tab" id="favTabBtn" onclick="toggleFavView()">❤️ المفضلة (<span id="favCount">0</span>)</button>
             <button class="btn btn-outline" onclick="resetExclusions()">إعادة ضبط القائمة</button>
             <div class="counter-badge" id="excludedCount">المستبعدة: 0</div>
         </div>
@@ -225,16 +269,17 @@
             <div class="modal-desc" id="modalDesc">الوصف غير متوفر حالياً.</div>
             <div class="modal-actions">
                 <button class="btn" onclick="copyTitle()">📋 نسخ الاسم</button>
+                <button class="btn btn-fav-tab" id="modalFavBtn" onclick="toggleFavCurrent()">❤️ إضافة للمفضلة</button>
                 <a id="searchGoogleBtn" target="_blank" class="btn btn-outline">🔍 بحث في Google</a>
             </div>
         </div>
     </div>
 
-    <!-- Toast -->
-    <div class="toast" id="toast">تم النسخ بنجاح!</div>
+    <!-- Toast الإشعارات -->
+    <div class="toast" id="toast">تمت العملية بنجاح!</div>
 
     <script>
-        // قائمة الـ 100 مانهوا المستبعدة بالكامل
+        // الـ 100 مانهوا المستبعدة أولياً
         const initialExcluded = [
             136331, 137304, 117540, 130870, 97897, 115000, 151025, 103156, 137595, 119276, 
             177706, 113666, 130429, 141007, 120385, 116506, 175262, 75275, 117536, 52651, 
@@ -249,14 +294,19 @@
         ];
 
         let savedExclusions = JSON.parse(localStorage.getItem('slax_excluded_ids')) || [];
-        let excludedIds = Array.from(new Set([...initialExcluded, ...savedExclusions]));
+        let favorites = JSON.parse(localStorage.getItem('slax_favorites')) || [];
+        
+        // إزالة التكرار أوتوماتيكياً عبر Set
+        let excludedSet = new Set([...initialExcluded, ...savedExclusions]);
         let currentFetchedList = [];
-        let activeTitleForCopy = '';
-        let pageNumber = 1;
+        let activeItem = null;
+        let showingFavs = false;
 
-        function updateBadge() {
-            document.getElementById('excludedCount').innerText = `المستبعدة: ${excludedIds.length}`;
-            localStorage.setItem('slax_excluded_ids', JSON.stringify(excludedIds));
+        function updateUIBadges() {
+            document.getElementById('excludedCount').innerText = `المستبعدة: ${excludedSet.size}`;
+            document.getElementById('favCount').innerText = favorites.length;
+            localStorage.setItem('slax_excluded_ids', JSON.stringify(Array.from(excludedSet)));
+            localStorage.setItem('slax_favorites', JSON.stringify(favorites));
         }
 
         function showToast(msg) {
@@ -267,11 +317,12 @@
         }
 
         async function fetchUniqueManhwa() {
+            if (showingFavs) toggleFavView(); // الخروج من وضع المفضلة عند الجلب
+            
             const btn = document.getElementById('loadBtn');
             btn.innerText = "جاري الجلب...";
             btn.disabled = true;
 
-            // تحديد perPage بشكل صريح داخل المتغيرات لضمان جلب 50 مانهوا
             const query = `
             query GetMassiveManhwa($page: Int, $perPage: Int, $excluded: [Int]) {
               Page(page: $page, perPage: $perPage) {
@@ -294,8 +345,8 @@
                         query: query,
                         variables: { 
                             page: 1, 
-                            perPage: 50, // إجبار السيرفر على إرجاع 50 مانهوا
-                            excluded: excludedIds 
+                            perPage: 50, 
+                            excluded: Array.from(excludedSet) 
                         }
                     })
                 });
@@ -303,7 +354,7 @@
                 const result = await response.json();
                 
                 if (!result.data || !result.data.Page || !result.data.Page.media) {
-                    throw new Error("Invalid API Response");
+                    throw new Error("Invalid Response");
                 }
 
                 const mediaList = result.data.Page.media;
@@ -315,13 +366,11 @@
                 }
 
                 currentFetchedList = mediaList;
-                renderCards(mediaList);
+                applyFilters();
 
-                // إضافة المعروض إلى مصفوفة الاستبعاد
-                mediaList.forEach(item => {
-                    if(!excludedIds.includes(item.id)) excludedIds.push(item.id);
-                });
-                updateBadge();
+                // إضافة المعروض إلى قائمة الاستبعاد لتجنب تكرارها مستقبلاً
+                mediaList.forEach(item => excludedSet.add(item.id));
+                updateUIBadges();
 
                 btn.innerText = "عرض 50 مانهوا جديدة ➔";
                 btn.disabled = false;
@@ -337,15 +386,24 @@
             const grid = document.getElementById('manhwaGrid');
             grid.innerHTML = '';
 
+            if(list.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; color: var(--text-dim); padding: 2rem;">لا توجد نتائج مطابقة لفلتر البحث.</p>';
+                return;
+            }
+
             list.forEach(item => {
                 const title = item.title.english || item.title.romaji;
                 const score = item.averageScore ? (item.averageScore / 10).toFixed(1) : 'N/A';
                 const mainGenre = item.genres && item.genres.length > 0 ? item.genres.slice(0, 2).join(', ') : 'Manhwa';
+                const isFav = favorites.some(f => f.id === item.id);
 
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.onclick = () => openModal(item);
                 card.innerHTML = `
+                    <button class="fav-btn-icon ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFav(${item.id})">
+                        ${isFav ? '❤️' : '🤍'}
+                    </button>
                     <img src="${item.coverImage.large}" alt="${title}" loading="lazy">
                     <div class="card-info">
                         <div class="card-title" title="${title}">${title}</div>
@@ -359,22 +417,59 @@
             });
         }
 
-        function filterLocalResults() {
-            const term = document.getElementById('searchInput').value.toLowerCase().trim();
-            const filtered = currentFetchedList.filter(item => {
-                const englishTitle = (item.title.english || '').toLowerCase();
-                const romajiTitle = (item.title.romaji || '').toLowerCase();
-                return englishTitle.includes(term) || romajiTitle.includes(term);
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            const genreTerm = document.getElementById('genreSelect').value;
+
+            const targetList = showingFavs ? favorites : currentFetchedList;
+
+            const filtered = targetList.filter(item => {
+                const engTitle = (item.title.english || '').toLowerCase();
+                const romTitle = (item.title.romaji || '').toLowerCase();
+                const matchesSearch = engTitle.includes(searchTerm) || romTitle.includes(searchTerm);
+                
+                const matchesGenre = (genreTerm === 'ALL') || (item.genres && item.genres.includes(genreTerm));
+
+                return matchesSearch && matchesGenre;
             });
+
             renderCards(filtered);
         }
 
-        function openModal(item) {
-            const title = item.title.english || item.title.romaji;
-            activeTitleForCopy = title;
+        function toggleFav(id) {
+            const foundIndex = favorites.findIndex(f => f.id === id);
+            if (foundIndex > -1) {
+                favorites.splice(foundIndex, 1);
+                showToast("تمت الإزالة من المفضلة");
+            } else {
+                const item = currentFetchedList.find(i => i.id === id) || activeItem;
+                if (item) {
+                    favorites.push(item);
+                    showToast("تمت الإضافة للمفضلة! ❤️");
+                }
+            }
+            updateUIBadges();
+            applyFilters();
+            if(activeItem && activeItem.id === id) updateModalFavBtn();
+        }
 
-            // تنظيف الوصف من نصوص HTML
-            let cleanDesc = item.description || 'لا يوجد وصف متوفر لهذه المانهوا.';
+        function toggleFavView() {
+            showingFavs = !showingFavs;
+            const favBtn = document.getElementById('favTabBtn');
+            if (showingFavs) {
+                favBtn.classList.add('active');
+                showToast("عرض مانهوات المفضلة");
+            } else {
+                favBtn.classList.remove('active');
+            }
+            applyFilters();
+        }
+
+        function openModal(item) {
+            activeItem = item;
+            const title = item.title.english || item.title.romaji;
+
+            let cleanDesc = item.description || 'لا يوجد وصف متوفر لهذا العمل حالياً.';
             cleanDesc = cleanDesc.replace(/<[^>]*>?/gm, '');
 
             document.getElementById('modalImg').src = item.coverImage.large;
@@ -384,23 +479,35 @@
             document.getElementById('modalDesc').innerText = cleanDesc;
             document.getElementById('searchGoogleBtn').href = `https://www.google.com/search?q=${encodeURIComponent(title + ' manhwa')}`;
 
+            updateModalFavBtn();
             document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        function updateModalFavBtn() {
+            if(!activeItem) return;
+            const isFav = favorites.some(f => f.id === activeItem.id);
+            const btn = document.getElementById('modalFavBtn');
+            btn.innerText = isFav ? "❤️ في المفضلة" : "🤍 إضافة للمفضلة";
+        }
+
+        function toggleFavCurrent() {
+            if (activeItem) toggleFav(activeItem.id);
         }
 
         function closeModal() {
             document.getElementById('modalOverlay').classList.remove('active');
         }
 
-        // دالة نسخ تعمل على جميع الأجهزة
         function copyTitle() {
-            if (!activeTitleForCopy) return;
+            if (!activeItem) return;
+            const title = activeItem.title.english || activeItem.title.romaji;
 
             if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(activeTitleForCopy).then(() => {
+                navigator.clipboard.writeText(title).then(() => {
                     showToast("تم نسخ الاسم بنجاح!");
-                }).catch(() => fallbackCopy(activeTitleForCopy));
+                }).catch(() => fallbackCopy(title));
             } else {
-                fallbackCopy(activeTitleForCopy);
+                fallbackCopy(title);
             }
         }
 
@@ -416,22 +523,22 @@
                 document.execCommand('copy');
                 showToast("تم نسخ الاسم بنجاح!");
             } catch (err) {
-                alert("اسم المانهوا: " + text);
+                alert("الاسم: " + text);
             }
             document.body.removeChild(textArea);
         }
 
         function resetExclusions() {
-            if (confirm("هل تريد إعادة ضبط قائمة الاستبعاد وإلغاء المحفوظات؟")) {
+            if (confirm("هل تريد إعادة ضبط قائمة الاستبعاد؟ سيعود الترتيب من البداية.")) {
                 localStorage.removeItem('slax_excluded_ids');
-                excludedIds = [...initialExcluded];
-                updateBadge();
+                excludedSet = new Set(initialExcluded);
+                updateUIBadges();
                 fetchUniqueManhwa();
             }
         }
 
-        // التشغيل التلقائي
-        updateBadge();
+        // التشغيل التلقائي عند فتح الصفحة
+        updateUIBadges();
         fetchUniqueManhwa();
     </script>
 </body>
