@@ -41,7 +41,6 @@
             --radius-lg: 20px;
         }
 
-        /* ثيمات مخصصة (الميزة 3) */
         body.theme-blue { --accent-color: #007aff; --accent-dark: #0040dd; --accent-hover: #3395ff; --border-color: #002255; }
         body.theme-purple { --accent-color: #9b59b6; --accent-dark: #512e5f; --accent-hover: #af7ac5; --border-color: #3a1545; }
         body.theme-green { --accent-color: #2ed573; --accent-dark: #107c41; --accent-hover: #7bed9f; --border-color: #0c4224; }
@@ -253,10 +252,9 @@
 
         .card:hover { transform: translateY(-6px); border-color: var(--accent-color); box-shadow: 0 10px 25px rgba(229, 9, 20, 0.35); }
 
-        .card-img-wrap { position: relative; width: 100%; padding-top: 140%; overflow: hidden; background: #120406; }
+        .card-img-wrap { position: relative; width: 100%; padding-top: 140%; overflow: hidden; background: #120406; pointer-events: none; }
         .card-img-wrap img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
 
-        /* وسام التريند (الميزة 1) */
         .trending-badge {
             position: absolute;
             top: 8px; right: 8px;
@@ -289,11 +287,11 @@
             position: absolute; top: 8px; left: 8px;
             background: rgba(13, 4, 5, 0.85); backdrop-filter: blur(4px); border: 1px solid var(--border-color);
             color: #fff; border-radius: 50%; width: 34px; height: 34px;
-            display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.95rem; z-index: 2;
+            display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.95rem; z-index: 3;
         }
         .fav-btn-icon.active { color: var(--accent-color); border-color: var(--accent-color); background: rgba(229, 9, 20, 0.15); }
 
-        .card-info { padding: 0.85rem; display: flex; flex-direction: column; gap: 0.4rem; flex-grow: 1; justify-content: space-between; }
+        .card-info { padding: 0.85rem; display: flex; flex-direction: column; gap: 0.4rem; flex-grow: 1; justify-content: space-between; pointer-events: none; }
         .card-title { font-size: 0.9rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #fff; }
         .card-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; }
         .score { color: var(--gold-color); font-weight: bold; }
@@ -347,18 +345,38 @@
         .playlist-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; font-size: 0.78rem; border-bottom: 1px solid #222; cursor: pointer; border-radius: 4px; }
         .playlist-item:hover { background: #252525; color: var(--green-color); }
         .playlist-item-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px; }
-        .playlist-del-btn { color: #ff4757; background: transparent; border: none; cursor: pointer; }
+        .playlist-del-btn { color: #ff4757; background: transparent; border: none; cursor: pointer; padding: 2px 6px; }
 
-        /* النوافذ المنبثقة */
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(5, 1, 2, 0.88); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 99999; padding: 1rem; }
-        .modal-overlay.active { display: flex; }
-        .modal { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-lg); max-width: 680px; width: 100%; max-height: 92vh; overflow-y: auto; text-align: right; padding: 1.5rem; position: relative; box-shadow: 0 15px 40px rgba(0,0,0,0.9); }
-        .modal-close { position: absolute; top: 1rem; left: 1rem; background: rgba(255,255,255,0.05); border: none; color: var(--text-dim); font-size: 1.2rem; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        
-        .modal-header { display: flex; gap: 1.2rem; margin-bottom: 1.2rem; }
-        .modal-header img { width: 130px; height: 185px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--border-color); }
-        .modal-details { display: flex; flex-direction: column; gap: 0.5rem; justify-content: center; }
-        .modal-title { font-size: 1.3rem; font-weight: 800; color: #fff; }
+        /* 🎡 كود وتصميم عجلة الحظ الاحترافية (Canvas Wheel) 🎡 */
+        .wheel-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 1.5rem auto;
+        }
+
+        #wheelCanvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow: 0 0 25px rgba(229, 9, 20, 0.5);
+            border: 4px solid var(--accent-color);
+            transition: transform 4s cubic-bezier(0.15, 0.9, 0.2, 1);
+        }
+
+        .wheel-arrow {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 25px solid var(--gold-color);
+            z-index: 10;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.8));
+        }
 
         .chapter-notes-box { background: #18080a; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.8rem; margin-bottom: 1rem; display: flex; flex-direction: column; gap: 6px; }
         .chapter-notes-box label { font-size: 0.78rem; color: var(--text-dim); font-weight: bold; }
@@ -370,6 +388,35 @@
         .stat-card { background: rgba(255,255,255,0.04); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1rem; text-align: center; }
         .stat-card .num { font-size: 1.6rem; font-weight: 900; color: var(--accent-color); }
         .stat-card .label { font-size: 0.75rem; color: var(--text-dim); }
+
+        .ios-guide-box { background: rgba(255, 255, 255, 0.05); border: 1px dashed var(--accent-color); border-radius: var(--radius-sm); padding: 1rem; margin-top: 1rem; text-align: right; font-size: 0.85rem; line-height: 1.8; color: var(--text-dim); }
+
+        .skeleton { background: linear-gradient(90deg, #18080a 25%, #2a0e12 50%, #18080a 75%); background-size: 200% 100%; animation: loading 1.5s infinite; border-radius: var(--radius-md); }
+        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        .skeleton-card { height: 300px; }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(5, 1, 2, 0.88); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 99999; padding: 1rem; }
+        .modal-overlay.active { display: flex; }
+        .modal { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-lg); max-width: 680px; width: 100%; max-height: 92vh; overflow-y: auto; text-align: right; padding: 1.5rem; position: relative; box-shadow: 0 15px 40px rgba(0,0,0,0.9); }
+        .modal-close { position: absolute; top: 1rem; left: 1rem; background: rgba(255,255,255,0.05); border: none; color: var(--text-dim); font-size: 1.2rem; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        
+        .modal-header { display: flex; gap: 1.2rem; margin-bottom: 1.2rem; }
+        .modal-header img { width: 130px; height: 185px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--border-color); }
+        .modal-details { display: flex; flex-direction: column; gap: 0.5rem; justify-content: center; }
+        .modal-title { font-size: 1.3rem; font-weight: 800; color: #fff; line-height: 1.3; }
+
+        .modal-badge-group { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+        .badge { background: rgba(255, 255, 255, 0.06); padding: 3px 8px; border-radius: 4px; font-size: 0.78rem; color: var(--text-dim); border: 1px solid rgba(255, 255, 255, 0.08); }
+
+        .desc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+
+        .modal-desc { font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; margin-bottom: 1.2rem; max-height: 140px; overflow-y: auto; padding-left: 5px; border-right: 2px solid var(--accent-dark); padding-right: 10px; }
+        .sources-title { font-size: 0.85rem; font-weight: bold; color: var(--text-dim); margin-bottom: 0.5rem; }
+        .modal-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        .status-selector { display: flex; gap: 6px; margin-bottom: 1rem; background: var(--bg-color); padding: 5px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); }
+        .status-option { flex: 1; text-align: center; padding: 6px 4px; font-size: 0.75rem; border-radius: 4px; cursor: pointer; color: var(--text-dim); }
+        .status-option.active { background: var(--accent-dark); color: #fff; font-weight: bold; }
 
         .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background-color: var(--accent-color); color: #fff; padding: 0.8rem 1.8rem; border-radius: 30px; font-size: 0.9rem; font-weight: bold; box-shadow: 0 8px 25px rgba(229,9,20,0.5); transition: transform 0.3s; z-index: 100000; }
         .toast.show { transform: translateX(-50%) translateY(0); }
@@ -390,14 +437,11 @@
     <div class="container">
         
         <div class="controls-card">
-            
-            <!-- شريط البحث المباشر -->
             <div class="search-box-group">
                 <input type="text" id="directSearchInput" placeholder="ابحث باسم المانهوا بالإنجليزية/العربية أو الـ ID..." oninput="applyFilters()" onkeypress="if(event.key === 'Enter') searchDirectManhwa()">
                 <button class="btn" onclick="searchDirectManhwa()"><i class="fa-solid fa-magnifying-glass"></i> بحث مباشر</button>
             </div>
 
-            <!-- خيارات الفلترة المنسدلة -->
             <div class="filter-grid">
                 <select id="genreSelect" onchange="applyFilters()">
                     <option value="ALL">جميع التصنيفات 🎭</option>
@@ -435,7 +479,6 @@
                 </select>
             </div>
 
-            <!-- شريط التصنيفات الأفقية -->
             <div class="genre-tags-bar">
                 <button class="tag-btn active" onclick="selectGenreTag('ALL', this)">الكل 🌟</button>
                 <button class="tag-btn" onclick="selectGenreTag('Action', this)">أكشن ⚔️</button>
@@ -445,7 +488,6 @@
                 <button class="tag-btn" onclick="selectGenreTag('Romance', this)">رومانسية ❤️</button>
             </div>
 
-            <!-- أزرار الإجراءات وتخصيص الثيم (الميزة 3) -->
             <div class="action-buttons">
                 <div class="btn-group-left">
                     <button class="btn" id="loadBtn" onclick="fetchUniqueManhwa()"><i class="fa-solid fa-rotate"></i> جلب 50 عشوائي</button>
@@ -455,7 +497,6 @@
                 </div>
 
                 <div class="btn-group-right">
-                    <!-- أزرار الثيمات المخصصة -->
                     <select id="themeSelector" onchange="changeTheme(this.value)" style="width: auto; padding: 0.5rem; font-size: 0.78rem;">
                         <option value="default">ثيم أحمر ناري 🔥</option>
                         <option value="blue">نيون أزرق ⚡</option>
@@ -501,7 +542,7 @@
             <div class="album-art" id="albumArt"><i class="fa-solid fa-music"></i></div>
             <div class="track-info">
                 <div class="track-name" id="trackName">جاهز للتشغيل</div>
-                <div class="track-artist" id="trackArtist">الأغاني الأربعة موجودة بمفضلتك تلقائياً</div>
+                <div class="track-artist" id="trackArtist">الأغاني الأربعة موجودة بالمفضلة تلقائياً</div>
             </div>
         </div>
 
@@ -532,6 +573,7 @@
                     <div class="modal-badge-group">
                         <span class="badge" id="modalScore" style="color: var(--gold-color);"><i class="fa-solid fa-star"></i> 0.0</span>
                         <span class="badge" id="modalStatus">مستمر</span>
+                        <span class="badge" id="modalFormat" style="color:#a855f7;">MANHWA</span>
                         <span class="badge" id="modalIdTag" style="color:#38bdf8;">ID: --</span>
                     </div>
                     <div class="genres" id="modalGenres" style="margin-top: 5px; color: var(--text-dim);">التصنيفات</div>
@@ -577,13 +619,20 @@
         </div>
     </div>
 
-    <!-- Modal عجلة الحظ العشوائية -->
+    <!-- 🎡 Modal عجلة الحظ الحقيقية المرسومة بالـ Canvas 🎡 -->
     <div class="modal-overlay" id="wheelModalOverlay" onclick="closeWheelModal()">
-        <div class="modal" onclick="event.stopPropagation()" style="text-align: center; padding: 2rem;">
+        <div class="modal" onclick="event.stopPropagation()" style="text-align: center; padding: 1.5rem;">
             <button class="modal-close" onclick="closeWheelModal()"><i class="fa-solid fa-xmark"></i></button>
-            <h3 style="color:#fff; margin-bottom:1rem;"><i class="fa-solid fa-dharmachakra" style="color:var(--accent-color);"></i> عجلة الحظ لاختيار المانهوا</h3>
-            <div id="wheelResultBox" style="font-size: 1.2rem; font-weight: bold; color: var(--gold-color); margin: 2rem 0; min-height: 60px;">اضغط على الزر لتدوير العجلة واختيار مانهوا لك!</div>
-            <button class="btn btn-wheel" onclick="spinWheelAction()" style="font-size: 1rem; padding: 0.9rem 2rem;"><i class="fa-solid fa-play"></i> دور العجلة الآن 🎡</button>
+            <h3 style="color:#fff; margin-bottom:0.5rem;"><i class="fa-solid fa-dharmachakra" style="color:var(--accent-color);"></i> عجلة الحظ الدوارة</h3>
+            <p style="font-size:0.8rem; color:var(--text-dim);">أدر العجلة ليتم اختيار مانهوا ممتازة لك تلقائياً!</p>
+            
+            <div class="wheel-container">
+                <div class="wheel-arrow"></div>
+                <canvas id="wheelCanvas" width="280" height="280"></canvas>
+            </div>
+
+            <div id="wheelResultBox" style="font-size: 1rem; font-weight: bold; color: var(--gold-color); min-height: 40px;">اضغط على الزر لتدوير العجلة!</div>
+            <button class="btn btn-wheel" id="spinBtn" onclick="startSpinningWheel()" style="font-size: 1rem; padding: 0.8rem 2rem;"><i class="fa-solid fa-rotate-right"></i> تدوير العجلة الآن 🎡</button>
         </div>
     </div>
 
@@ -619,13 +668,15 @@
         </div>
     </div>
 
+    <input type="file" id="importFileInput" accept=".json" onchange="importData(event)">
+
     <div class="toast" id="toast"><i class="fa-solid fa-circle-check"></i> <span id="toastMsg">تمت العملية بنجاح!</span></div>
 
     <script>
         const blockedGenres = ["Boys Love", "Ecchi", "Hentai", "Yaoi", "Erotica", "Shounen Ai", "Yuri", "Shoujo Ai"];
         const initialExcluded = [136331, 137304, 117540, 130870, 97897, 115000, 151025, 103156, 137595, 119276];
 
-        // 🎵 الأغاني الأربعة الإجبارية الدائمة المضافة تلقائياً 🎵
+        // 🎵 الأغاني الأربعة الافتراضية المضمنة دائمًا 🎵
         const defaultMusicPlaylist = [
             { id: 101, name: "Funk★Celeste Slowed", url: "https://youtu.be/T5iBKZmcO5s?si=1mMYa2UK7SCOm9Qo" },
             { id: 102, name: "Phonk Audio / Song 1", url: "https://youtu.be/pmZ7hTChGAY?si=30dQRI-VePy4zlSq" },
@@ -641,7 +692,7 @@
         let userNotes = JSON.parse(localStorage.getItem('slax_user_notes')) || {};
         let savedTheme = localStorage.getItem('slax_theme') || 'default';
 
-        // دمج دائم للأغاني الأربعة
+        // دمج الأغاني الأربعة تلقائياً
         let musicPlaylist = [...storedMusic];
         defaultMusicPlaylist.forEach(defSong => {
             if(!musicPlaylist.some(m => m.url === defSong.url)) {
@@ -661,7 +712,11 @@
         let isMusicPlaying = false;
         let currentYtId = "";
 
-        // تطبيق الثيم المحفوظ
+        // متغيرات تدوير العجلة
+        let wheelAngle = 0;
+        let isSpinning = false;
+        let wheelItems = [];
+
         if (savedTheme !== 'default') {
             document.body.className = `theme-${savedTheme}`;
             document.getElementById('themeSelector').value = savedTheme;
@@ -677,20 +732,83 @@
         function closeIosModal() { document.getElementById('iosModalOverlay').classList.remove('active'); }
         function openStatsModal() { renderStatsData(); document.getElementById('statsModalOverlay').classList.add('active'); }
         function closeStatsModal() { document.getElementById('statsModalOverlay').classList.remove('active'); }
-        
-        function openWheelModal() { document.getElementById('wheelModalOverlay').classList.add('active'); }
+
+        /* 🎡 كود ورسم عجلة الحظ 🎡 */
+        function openWheelModal() {
+            document.getElementById('wheelModalOverlay').classList.add('active');
+            drawWheelCanvas();
+        }
+
         function closeWheelModal() { document.getElementById('wheelModalOverlay').classList.remove('active'); }
 
-        function spinWheelAction() {
-            const list = currentFetchedList.length > 0 ? currentFetchedList : favorites;
-            if (list.length === 0) { showToast("جلب المانهوات أولاً لتشغيل العجلة!"); return; }
-            const randomItem = list[Math.floor(Math.random() * list.length)];
-            const title = randomItem.title.english || randomItem.title.romaji;
-            document.getElementById('wheelResultBox').innerHTML = `🎉 مبروك! العجلة اختارت لك:<br><span style="color:#fff; font-size:1.4rem;">${title}</span>`;
+        function drawWheelCanvas() {
+            const canvas = document.getElementById('wheelCanvas');
+            const ctx = canvas.getContext('2d');
+            wheelItems = currentFetchedList.length > 0 ? currentFetchedList.slice(0, 8) : favorites.slice(0, 8);
+
+            if(wheelItems.length === 0) {
+                document.getElementById('wheelResultBox').innerText = "يرجى جلب المانهوات أولاً لتدوير العجلة!";
+                return;
+            }
+
+            const numSegments = wheelItems.length;
+            const arcSize = (2 * Math.PI) / numSegments;
+            const colors = ['#e50914', '#160709', '#7c3aed', '#1d1d1f', '#d97706', '#0f382c', '#1e90ff', '#330b0e'];
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < numSegments; i++) {
+                const angle = i * arcSize;
+                ctx.beginPath();
+                ctx.fillStyle = colors[i % colors.length];
+                ctx.moveTo(140, 140);
+                ctx.arc(140, 140, 140, angle, angle + arcSize);
+                ctx.lineTo(140, 140);
+                ctx.fill();
+                ctx.stroke();
+
+                // رسم النص
+                ctx.save();
+                ctx.translate(140, 140);
+                ctx.rotate(angle + arcSize / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 11px Segoe UI";
+                const text = (wheelItems[i].title.english || wheelItems[i].title.romaji || "").substring(0, 14);
+                ctx.fillText(text, 125, 4);
+                ctx.restore();
+            }
+        }
+
+        function startSpinningWheel() {
+            if(isSpinning) return;
+            if(wheelItems.length === 0) { showToast("جلب المانهوات أولاً!"); return; }
+
+            isSpinning = true;
+            document.getElementById('spinBtn').disabled = true;
+            document.getElementById('wheelResultBox').innerText = "جاري تدوير العجلة... 🎡";
+
+            const canvas = document.getElementById('wheelCanvas');
+            const extraRounds = 5 + Math.floor(Math.random() * 5);
+            const randomSegment = Math.floor(Math.random() * wheelItems.length);
+            const segmentDegrees = 360 / wheelItems.length;
+            const targetDegree = extraRounds * 360 + (randomSegment * segmentDegrees) + (segmentDegrees / 2);
+
+            canvas.style.transform = `rotate(${targetDegree}deg)`;
+
             setTimeout(() => {
-                closeWheelModal();
-                openModal(randomItem);
-            }, 1800);
+                isSpinning = false;
+                document.getElementById('spinBtn').disabled = false;
+                const winner = wheelItems[wheelItems.length - 1 - randomSegment] || wheelItems[0];
+                const winnerTitle = winner.title.english || winner.title.romaji;
+                
+                document.getElementById('wheelResultBox').innerHTML = `🎉 العجلة اختارت لك:<br><span style="color:#fff; font-size:1.2rem;">${winnerTitle}</span>`;
+                
+                setTimeout(() => {
+                    closeWheelModal();
+                    openModal(winner);
+                }, 1600);
+            }, 4000);
         }
 
         function isClean(item) {
@@ -888,11 +1006,15 @@
                 const mainGenre = item.genres && item.genres.length > 0 ? item.genres.slice(0, 2).join(', ') : 'Manhwa';
                 const isFav = favorites.some(f => f.id === item.id);
                 const statusClass = item.status || '';
-                const isTrending = item.averageScore && item.averageScore >= 80; // وسام التريند للأعمال الأعلى من 8
+                const isTrending = item.averageScore && item.averageScore >= 80;
 
                 const card = document.createElement('div');
                 card.className = 'card';
-                card.onclick = () => openModal(item);
+                card.setAttribute('data-id', item.id);
+                card.onclick = (e) => {
+                    openModal(item);
+                };
+
                 card.innerHTML = `
                     ${isTrending ? '<span class="trending-badge">🔥 تريند</span>' : ''}
                     <button class="fav-btn-icon ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFav(${item.id})">
@@ -1013,7 +1135,7 @@
             });
         }
 
-        // مشغل الموسيقى
+        /* 🎵 مشغل يوتيوب المخصص ونظام سبوتيفاي 🎵 */
         function toggleSpotifyWidget() { document.getElementById('spotifyWidget').classList.toggle('active'); }
         function toggleViewport() { document.getElementById('playerViewport').classList.toggle('active'); }
         function togglePlaylistView() { document.getElementById('playlistContainer').classList.toggle('active'); }
@@ -1125,7 +1247,10 @@
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('modalScore').innerHTML = `<i class="fa-solid fa-star"></i> ${item.averageScore ? (item.averageScore / 10).toFixed(1) : 'N/A'}`;
             document.getElementById('modalStatus').innerText = item.status === 'RELEASING' ? 'مستمر' : (item.status === 'FINISHED' ? 'مكتمل' : 'متوقف');
-            document.getElementById('modalFormat').innerText = item.format || 'MANHWA';
+            
+            const formatEl = document.getElementById('modalFormat');
+            if (formatEl) formatEl.innerText = item.format || 'MANHWA';
+
             document.getElementById('modalIdTag').innerText = `ID: ${item.id}`;
             document.getElementById('modalGenres').innerText = item.genres ? item.genres.join(' • ') : 'Manhwa';
             document.getElementById('modalDesc').innerText = cleanDesc;
