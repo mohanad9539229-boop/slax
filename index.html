@@ -33,7 +33,7 @@
             --text-color: #ffffff;
             --text-dim: #b8a0a2;
             --gold-color: #ffcc00;
-            --green-color: #1ed760;
+            --green-color: #1ed760; /* Spotify Green */
             --blue-color: #1e90ff;
             --purple-color: #9b59b6;
             --radius-sm: 8px;
@@ -59,10 +59,10 @@
 
         /* شريط الترويسة العلوي */
         header {
-            background: linear-gradient(180deg, rgba(229, 9, 20, 0.15) 0%, rgba(11, 3, 4, 0) 100%);
-            padding: 2rem 1rem 1.5rem;
+            background: linear-gradient(180deg, rgba(229, 9, 20, 0.2) 0%, rgba(11, 3, 4, 0) 100%);
+            padding: 2.2rem 1rem 1.5rem;
             text-align: center;
-            border-bottom: 1px solid rgba(229, 9, 20, 0.1);
+            border-bottom: 1px solid rgba(229, 9, 20, 0.15);
             margin-bottom: 1.5rem;
         }
 
@@ -72,18 +72,18 @@
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.6rem;
             font-weight: 900;
             letter-spacing: 1px;
             color: #fff;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         h1 span {
             color: var(--accent-color);
-            text-shadow: 0 0 20px rgba(229, 9, 20, 0.7);
+            text-shadow: 0 0 25px rgba(229, 9, 20, 0.8);
         }
 
         p.sub {
@@ -99,14 +99,15 @@
             padding: 0 1rem;
         }
 
-        /* أدوات التحكم والبحث المباشر */
+        /* أدوات التحكم والفلترة الشاملة */
         .controls-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
             padding: 1.2rem;
             margin-bottom: 1.5rem;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
         }
 
         .search-box-group {
@@ -120,14 +121,72 @@
             background-color: var(--bg-color);
             border: 1px solid var(--border-color);
             color: #fff;
-            padding: 0.8rem 1rem;
+            padding: 0.85rem 1rem;
             border-radius: var(--radius-sm);
             outline: none;
-            font-size: 0.9rem;
+            font-size: 0.92rem;
+            transition: all 0.2s ease;
         }
 
         .search-box-group input:focus {
             border-color: var(--accent-color);
+            box-shadow: 0 0 12px rgba(229, 9, 20, 0.3);
+        }
+
+        /* صف الفلاتر والقوائم المنسدلة */
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        select {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: #fff;
+            padding: 0.75rem 0.8rem;
+            border-radius: var(--radius-sm);
+            outline: none;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        select:focus {
+            border-color: var(--accent-color);
+        }
+
+        /* شريط التاغات والتصنيفات السريعة الأفقية */
+        .genre-tags-bar {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 1rem;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-color) var(--bg-color);
+        }
+
+        .tag-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            color: var(--text-dim);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tag-btn:hover, .tag-btn.active {
+            background: var(--accent-color);
+            color: #fff;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 10px rgba(229, 9, 20, 0.4);
         }
 
         .action-buttons {
@@ -261,7 +320,7 @@
 
         /* 📜 شريط مشاهدات المانهوا الأخيرة 📜 */
         .recent-section {
-            margin-bottom: 1.2rem;
+            margin-top: 1rem;
             text-align: right;
             display: none;
         }
@@ -348,13 +407,17 @@
             position: absolute;
             bottom: 8px;
             right: 8px;
-            background: rgba(0, 0, 0, 0.75);
+            background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(4px);
             padding: 2px 8px;
             border-radius: 4px;
             font-size: 0.7rem;
             font-weight: 600;
         }
+
+        .status-tag.RELEASING { color: #2ed573; border: 1px solid #2ed573; }
+        .status-tag.FINISHED { color: var(--blue-color); border: 1px solid var(--blue-color); }
+        .status-tag.HIATUS { color: var(--gold-color); border: 1px solid var(--gold-color); }
 
         .fav-btn-icon {
             position: absolute;
@@ -567,6 +630,7 @@
 
         .track-artist { font-size: 0.75rem; color: var(--text-dim); }
 
+        /* 🎛️ أزرار التحكم بأسلوب سبوتيفاي 🎛️ */
         .spotify-controls {
             display: flex;
             align-items: center;
@@ -581,6 +645,12 @@
             color: #b3b3b3;
             font-size: 1.15rem;
             cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .spotify-btn:hover {
+            color: #fff;
+            transform: scale(1.1);
         }
 
         .spotify-btn.play-btn {
@@ -594,6 +664,12 @@
             justify-content: center;
             font-size: 1.2rem;
             cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255,255,255,0.2);
+        }
+
+        .spotify-btn.play-btn:hover {
+            transform: scale(1.08);
+            background: var(--green-color);
         }
 
         .spotify-actions-bar { display: flex; gap: 6px; }
@@ -608,6 +684,13 @@
             border: 1px solid #333;
             cursor: pointer;
             text-align: center;
+            transition: all 0.2s;
+        }
+
+        .btn-music-action:hover {
+            background: var(--green-color);
+            color: #000;
+            font-weight: bold;
         }
 
         .playlist-container {
@@ -631,9 +714,22 @@
             font-size: 0.78rem;
             border-bottom: 1px solid #222;
             cursor: pointer;
+            border-radius: 4px;
         }
 
-        .playlist-del-btn { color: #ff4757; background: transparent; border: none; cursor: pointer; }
+        .playlist-item:hover {
+            background: #252525;
+            color: var(--green-color);
+        }
+
+        .playlist-item-title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .playlist-del-btn { color: #ff4757; background: transparent; border: none; cursor: pointer; padding: 2px 6px; }
 
         /* ✍️ حقول الفصل والملاحظات المضافة داخل النافذة ✍️ */
         .chapter-notes-box {
@@ -704,6 +800,33 @@
             font-size: 0.75rem;
             color: var(--text-dim);
         }
+
+        .ios-guide-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px dashed var(--accent-color);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+            margin-top: 1rem;
+            text-align: right;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: var(--text-dim);
+        }
+
+        /* الهياكل العظمية للتحميل (Skeletons) */
+        .skeleton {
+            background: linear-gradient(90deg, #18080a 25%, #2a0e12 50%, #18080a 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: var(--radius-md);
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .skeleton-card { height: 300px; }
 
         /* النوافذ المنبثقة (Modals) */
         .modal-overlay {
@@ -833,19 +956,71 @@
     <header>
         <div class="header-content">
             <h1>SLAX <span>MANHWA</span> <i class="fa-solid fa-fire-flame-curved" style="font-size: 1.8rem;"></i></h1>
-            <p class="sub">تصفح وقراءة المانهوا الكورية مع مشغل يوتيوب احترافي ومفضلة أغاني</p>
+            <p class="sub">تصفح وقراءة المانهوا الكورية مع نظام فلترة شامل ومشغل موسيقى مميز</p>
         </div>
     </header>
 
     <div class="container">
         
-        <!-- كرت الفلترة والبحث المباشر -->
+        <!-- كرت الفلترة والتحكم الشامل -->
         <div class="controls-card">
             
             <!-- 🔍 البحث المباشر باسم المانهوا أو الـ ID 🔍 -->
             <div class="search-box-group">
-                <input type="text" id="directSearchInput" placeholder="ابحث باسم المانهوا بالإنجليزية/العربية أو اكتب الـ ID الرقمي مباشرة..." onkeypress="if(event.key === 'Enter') searchDirectManhwa()">
+                <input type="text" id="directSearchInput" placeholder="ابحث باسم المانهوا بالإنجليزية/العربية أو اكتب الـ ID الرقمي..." oninput="applyFilters()" onkeypress="if(event.key === 'Enter') searchDirectManhwa()">
                 <button class="btn" onclick="searchDirectManhwa()"><i class="fa-solid fa-magnifying-glass"></i> بحث مباشر</button>
+            </div>
+
+            <!-- 🎯 شريط خيارات الفلترة المنسدلة 🎯 -->
+            <div class="filter-grid">
+                <select id="genreSelect" onchange="applyFilters()">
+                    <option value="ALL">جميع التصنيفات 🎭</option>
+                    <option value="Action">أكشن (Action)</option>
+                    <option value="Fantasy">خيال (Fantasy)</option>
+                    <option value="Necromancy">مستحضر أرواح (Necromancy) 💀</option>
+                    <option value="Romance">رومانسية (Romance)</option>
+                    <option value="Drama">دراما (Drama)</option>
+                    <option value="Comedy">كوميديا (Comedy)</option>
+                    <option value="Adventure">مغامرة (Adventure)</option>
+                    <option value="Supernatural">خارق للطبيعة (Supernatural)</option>
+
+                    <option value="Slice of Life">شريحة من الحياة (Slice of Life)</option>
+
+                    <option value="Mystery">غموض (Mystery)</option>
+                    <option value="Sci-Fi">خيال علمي (Sci-Fi)</option>
+                </select>
+
+                <select id="statusSelect" onchange="applyFilters()">
+                    <option value="ALL">جميع الحالات 📌</option>
+                    <option value="RELEASING">مستمر (Releasing) 🟢</option>
+                    <option value="FINISHED">مكتمل (Finished) 🔵</option>
+                    <option value="HIATUS">متوقف مؤقتاً (Hiatus) 🟡</option>
+                </select>
+
+                <select id="sortSelect" onchange="applyFilters()">
+                    <option value="DEFAULT">الترتيب الافتراضي 🔀</option>
+                    <option value="SCORE_DESC">الأعلى تقييماً ⭐</option>
+                    <option value="TITLE_ASC">أبجدي (A-Z) 🔤</option>
+                </select>
+
+                <select id="userStatusFilter" onchange="applyFilters()">
+                    <option value="ALL">قائمتي الشخصية 📁</option>
+                    <option value="READING">قيد القراءة 📖</option>
+                    <option value="PLANNING">أخطط لقراءتها 📌</option>
+                    <option value="COMPLETED">مكتملة ✅</option>
+                </select>
+            </div>
+
+            <!-- 🏷️ شريط تاغات التصنيف السريعة الأفقية 🏷️ -->
+            <div class="genre-tags-bar">
+                <button class="tag-btn active" onclick="selectGenreTag('ALL', this)">الكل 🌟</button>
+                <button class="tag-btn" onclick="selectGenreTag('Action', this)">أكشن ⚔️</button>
+                <button class="tag-btn" onclick="selectGenreTag('Necromancy', this)">مستحضر أرواح 💀</button>
+                <button class="tag-btn" onclick="selectGenreTag('Fantasy', this)">خيال 🔮</button>
+                <button class="tag-btn" onclick="selectGenreTag('Adventure', this)">مغامرة 🏹</button>
+                <button class="tag-btn" onclick="selectGenreTag('Romance', this)">رومانسية ❤️</button>
+                <button class="tag-btn" onclick="selectGenreTag('Supernatural', this)">خارق للطبيعة 👻</button>
+                <button class="tag-btn" onclick="selectGenreTag('Comedy', this)">كوميديا 😂</button>
             </div>
 
             <!-- أزرار الإجراءات -->
@@ -919,7 +1094,7 @@
             <div class="album-art" id="albumArt"><i class="fa-solid fa-music"></i></div>
             <div class="track-info">
                 <div class="track-name" id="trackName">جاهز للتشغيل</div>
-                <div class="track-artist" id="trackArtist">أدخل رابط يوتيوب للاستماع</div>
+                <div class="track-artist" id="trackArtist">اختر من القائمة المفضلة بالأسفل</div>
             </div>
         </div>
 
@@ -965,7 +1140,7 @@
                 <div class="status-option" id="st-completed" onclick="setUserStatus('COMPLETED')">✅ أكملتها</div>
             </div>
 
-            <!-- ✍️ الفصول والملاحظات الشخصية (الميزة 4) ✍️ -->
+            <!-- ✍️ الفصول والملاحظات الشخصية ✍️ -->
             <div class="chapter-notes-box">
                 <label><i class="fa-solid fa-pen-to-square"></i> تقدم القراءة وملاحظاتك المخصصة:</label>
                 <div class="chapter-notes-inputs">
@@ -1001,7 +1176,7 @@
         </div>
     </div>
 
-    <!-- 📊 Modal الإحصائيات (الميزة 5) 📊 -->
+    <!-- 📊 Modal الإحصائيات 📊 -->
     <div class="modal-overlay" id="statsModalOverlay" onclick="closeStatsModal()">
         <div class="modal" id="statsModalCard" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeStatsModal()"><i class="fa-solid fa-xmark"></i></button>
@@ -1028,7 +1203,7 @@
             </div>
 
             <div style="margin-top: 1.2rem; display: flex; gap: 8px;">
-                <button class="btn btn-random" onclick="exportStatsPoster()"><i class="fa-solid fa-camera"></i> تصوير وبناء بوستر المفضلة (الميزة 7)</button>
+                <button class="btn btn-random" onclick="exportStatsPoster()"><i class="fa-solid fa-camera"></i> تصوير وبناء بوستر المفضلة</button>
             </div>
         </div>
     </div>
@@ -1064,12 +1239,20 @@
             136204, 124577, 121565, 155485, 111075, 110042, 167834, 107720, 164857, 107918
         ];
 
+        // 🎵 الأغاني الأربعة الافتراضية الدائمة بالمفضلة 🎵
+        const defaultMusicPlaylist = [
+            { id: 101, name: "Funk★Celeste Slowed", url: "https://youtu.be/T5iBKZmcO5s?si=1mMYa2UK7SCOm9Qo" },
+            { id: 102, name: "Phonk Audio / Song 1", url: "https://youtu.be/pmZ7hTChGAY?si=30dQRI-VePy4zlSq" },
+            { id: 103, name: "Phonk Audio / Song 2", url: "https://youtu.be/K5jh_vNO6ZM?si=30dQRI-VePy4zlSq" },
+            { id: 104, name: "Phonk Audio / Song 3", url: "https://youtu.be/GDjjGbdg3n4?si=V8MQ6mNZbDaEgDQF" }
+        ];
+
         let savedExclusions = JSON.parse(localStorage.getItem('slax_excluded_ids')) || [];
         let favorites = JSON.parse(localStorage.getItem('slax_favorites')) || [];
         let userStatusMap = JSON.parse(localStorage.getItem('slax_user_status')) || {};
-        let musicPlaylist = JSON.parse(localStorage.getItem('slax_music_playlist')) || [];
-        let recentViews = JSON.parse(localStorage.getItem('slax_recent_views')) || []; // سجل المشاهدات الميزة 2
-        let userNotes = JSON.parse(localStorage.getItem('slax_user_notes')) || {}; // الملاحظات والفصول الميزة 4
+        let musicPlaylist = JSON.parse(localStorage.getItem('slax_music_playlist')) || defaultMusicPlaylist;
+        let recentViews = JSON.parse(localStorage.getItem('slax_recent_views')) || [];
+        let userNotes = JSON.parse(localStorage.getItem('slax_user_notes')) || {};
 
         let excludedSet = new Set([...initialExcluded, ...savedExclusions]);
         let currentFetchedList = [];
@@ -1077,6 +1260,7 @@
         let originalDescText = "";
         let isTranslated = false;
         let showingFavs = false;
+        let activeGenreTag = "ALL";
 
         let currentPlayingUrl = "";
         let isMusicPlaying = false;
@@ -1118,17 +1302,68 @@
             setTimeout(() => toast.classList.remove('show'), 2800);
         }
 
+        // 🏷️ اختيار تاغات التصنيف الأفقية 🏷️
+        function selectGenreTag(genre, btnEl) {
+            document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+            if(btnEl) btnEl.classList.add('active');
+            activeGenreTag = genre;
+            document.getElementById('genreSelect').value = genre;
+            applyFilters();
+        }
+
+        // 🎯 تطبيق الفلاتر والبحث المباشر 🎯
+        function applyFilters() {
+            const searchTerm = document.getElementById('directSearchInput').value.toLowerCase().trim();
+            const genreTerm = document.getElementById('genreSelect').value;
+            const statusTerm = document.getElementById('statusSelect').value;
+            const sortTerm = document.getElementById('sortSelect').value;
+            const userStatusTerm = document.getElementById('userStatusFilter').value;
+
+            const targetList = showingFavs ? favorites : currentFetchedList;
+
+            let filtered = targetList.filter(item => {
+                if(!isClean(item)) return false;
+                
+                const engTitle = (item.title.english || '').toLowerCase();
+                const romTitle = (item.title.romaji || '').toLowerCase();
+                const itemIdStr = String(item.id);
+
+                const matchesSearch = !searchTerm || engTitle.includes(searchTerm) || romTitle.includes(searchTerm) || itemIdStr.includes(searchTerm);
+                
+                let matchesGenre = (genreTerm === 'ALL');
+                if (!matchesGenre && item.genres) {
+                    if (genreTerm === 'Necromancy') {
+                        matchesGenre = item.genres.some(g => g.toLowerCase().includes('necromancy') || g.toLowerCase().includes('summoner')) ||
+                                       (item.description && item.description.toLowerCase().includes('necromancer'));
+                    } else {
+                        matchesGenre = item.genres.includes(genreTerm);
+                    }
+                }
+
+                const matchesStatus = (statusTerm === 'ALL') || (item.status === statusTerm);
+                const matchesUserStatus = (userStatusTerm === 'ALL') || (userStatusMap[item.id] === userStatusTerm);
+
+                return matchesSearch && matchesGenre && matchesStatus && matchesUserStatus;
+            });
+
+            if (sortTerm === 'SCORE_DESC') {
+                filtered.sort((a, b) => (b.averageScore || 0) - (a.averageScore || 0));
+            } else if (sortTerm === 'TITLE_ASC') {
+                filtered.sort((a, b) => (a.title.english || "").localeCompare(b.title.english || ""));
+            }
+
+            renderCards(filtered);
+        }
+
         // 🔍 البحث المباشر باسم المانهوا أو الـ ID 🔍
         async function searchDirectManhwa() {
             const input = document.getElementById('directSearchInput').value.trim();
             if (!input) {
-                showToast("يرجى إدخال اسم المانهوا أو الـ ID للبحث!");
+                applyFilters();
                 return;
             }
 
             showSkeletons();
-
-            // فحص إذا كان البحث رقم عبارة عن ID
             const isId = /^\d+$/.test(input);
 
             const query = isId ? `
@@ -1138,7 +1373,7 @@
               }
             }` : `
             query ($search: String) {
-              Page(page: 1, perPage: 20) {
+              Page(page: 1, perPage: 30) {
                 media(search: $search, type: MANGA, countryOfOrigin: "KR", isAdult: false) {
                   id isAdult status format title { english romaji } coverImage { large } averageScore genres description
                 }
@@ -1209,7 +1444,7 @@
 
                 const cleanList = result.data.Page.media.filter(isClean);
                 currentFetchedList = cleanList;
-                renderCards(showingFavs ? favorites : currentFetchedList);
+                applyFilters();
                 cleanList.forEach(item => excludedSet.add(item.id));
                 updateUIBadges();
 
@@ -1257,7 +1492,7 @@
                     </button>
                     <div class="card-img-wrap">
                         <img src="${item.coverImage.large}" alt="${title}" loading="lazy" onerror="this.src='https://via.placeholder.com/180x250?text=No+Cover'">
-                        <span class="status-tag ${statusClass}">${item.status === 'RELEASING' ? 'مستمر' : 'مكتمل'}</span>
+                        <span class="status-tag ${statusClass}">${item.status === 'RELEASING' ? 'مستمر' : (item.status === 'FINISHED' ? 'مكتمل' : 'متوقف')}</span>
                     </div>
                     <div class="card-info">
                         <div class="card-title" title="${title}">${title}</div>
@@ -1291,17 +1526,16 @@
                 }
             }
             updateUIBadges();
-            renderCards(showingFavs ? favorites : currentFetchedList);
+            applyFilters();
             if(activeItem && activeItem.id === id) updateModalFavBtn();
         }
 
         function toggleFavView() {
             showingFavs = !showingFavs;
             document.getElementById('favTabBtn').classList.toggle('active', showingFavs);
-            renderCards(showingFavs ? favorites : currentFetchedList);
+            applyFilters();
         }
 
-        // 📜 إضافة وتسجيل المشاهدات الأخيرة (الميزة 2) 📜
         function addRecentView(item) {
             recentViews = recentViews.filter(r => r.id !== item.id);
             recentViews.unshift({ id: item.id, title: item.title.english || item.title.romaji, fullItem: item });
@@ -1324,7 +1558,6 @@
             });
         }
 
-        // ✍️ حفظ القراءة والملاحظات الشخصية (الميزة 4) ✍️
         function saveUserNotes() {
             if (!activeItem) return;
             const ch = document.getElementById('userChapterInput').value;
@@ -1334,7 +1567,6 @@
             showToast("تم حفظ الفصل والملاحظة!");
         }
 
-        // 📊 الإحصائيات وبناء البوستر (الميزة 5 و 7) 📊
         function renderStatsData() {
             document.getElementById('statFavCount').innerText = favorites.length;
             let readingCount = 0;
@@ -1479,7 +1711,7 @@
         function openModal(item) {
             activeItem = item;
             isTranslated = false;
-            addRecentView(item); // إضافة للـ Recent
+            addRecentView(item);
 
             const title = item.title.english || item.title.romaji || "بدون عنوان";
             let cleanDesc = (item.description || 'لا يوجد وصف متوفر.').replace(/<[^>]*>?/gm, '');
@@ -1488,13 +1720,12 @@
             document.getElementById('modalImg').src = item.coverImage.large;
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('modalScore').innerHTML = `<i class="fa-solid fa-star"></i> ${item.averageScore ? (item.averageScore / 10).toFixed(1) : 'N/A'}`;
-            document.getElementById('modalStatus').innerText = item.status === 'RELEASING' ? 'مستمر' : 'مكتمل';
+            document.getElementById('modalStatus').innerText = item.status === 'RELEASING' ? 'مستمر' : (item.status === 'FINISHED' ? 'مكتمل' : 'متوقف');
             document.getElementById('modalFormat').innerText = item.format || 'MANHWA';
             document.getElementById('modalIdTag').innerText = `ID: ${item.id}`;
             document.getElementById('modalGenres').innerText = item.genres ? item.genres.join(' • ') : 'Manhwa';
             document.getElementById('modalDesc').innerText = cleanDesc;
 
-            // جلب الملاحظات المسجلة سابقاً للمانهوا
             const noteData = userNotes[item.id] || { chapter: '', note: '' };
             document.getElementById('userChapterInput').value = noteData.chapter || '';
             document.getElementById('userNoteInput').value = noteData.note || '';
@@ -1562,7 +1793,7 @@
             else userStatusMap[activeItem.id] = status;
             updateUIBadges();
             updateModalStatusSelector();
-            renderCards(showingFavs ? favorites : currentFetchedList);
+            applyFilters();
             showToast("تم تحديث حالة القراءة!");
         }
 
@@ -1619,7 +1850,7 @@
                     if (data.userNotes) userNotes = data.userNotes;
                     if (data.recentViews) recentViews = data.recentViews;
                     updateUIBadges();
-                    renderCards(showingFavs ? favorites : currentFetchedList);
+                    applyFilters();
                     showToast("تم الاستيراد بنجاح!");
                 } catch (err) { alert("ملف غير صالح"); }
             };
