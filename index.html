@@ -33,13 +33,18 @@
             --text-color: #ffffff;
             --text-dim: #b8a0a2;
             --gold-color: #ffcc00;
-            --green-color: #1ed760; /* Spotify Green */
+            --green-color: #1ed760;
             --blue-color: #1e90ff;
             --purple-color: #9b59b6;
             --radius-sm: 8px;
             --radius-md: 14px;
             --radius-lg: 20px;
         }
+
+        /* ثيمات مخصصة (الميزة 3) */
+        body.theme-blue { --accent-color: #007aff; --accent-dark: #0040dd; --accent-hover: #3395ff; --border-color: #002255; }
+        body.theme-purple { --accent-color: #9b59b6; --accent-dark: #512e5f; --accent-hover: #af7ac5; --border-color: #3a1545; }
+        body.theme-green { --accent-color: #2ed573; --accent-dark: #107c41; --accent-hover: #7bed9f; --border-color: #0c4224; }
 
         * {
             box-sizing: border-box;
@@ -55,9 +60,9 @@
             min-height: 100vh;
             padding-bottom: 6rem;
             line-height: 1.5;
+            transition: background 0.3s;
         }
 
-        /* شريط الترويسة العلوي */
         header {
             background: linear-gradient(180deg, rgba(229, 9, 20, 0.2) 0%, rgba(11, 3, 4, 0) 100%);
             padding: 2.2rem 1rem 1.5rem;
@@ -66,10 +71,7 @@
             margin-bottom: 1.5rem;
         }
 
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+        .header-content { max-width: 1200px; margin: 0 auto; }
 
         h1 {
             font-size: 2.6rem;
@@ -86,20 +88,10 @@
             text-shadow: 0 0 25px rgba(229, 9, 20, 0.8);
         }
 
-        p.sub {
-            color: var(--text-dim);
-            margin-top: 0.5rem;
-            font-size: 0.95rem;
-        }
+        p.sub { color: var(--text-dim); margin-top: 0.5rem; font-size: 0.95rem; }
 
-        /* الحاوية الرئيسية */
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 1rem; }
 
-        /* أدوات التحكم والفلترة الشاملة */
         .controls-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -125,18 +117,13 @@
             border-radius: var(--radius-sm);
             outline: none;
             font-size: 0.92rem;
-            transition: all 0.2s ease;
         }
 
-        .search-box-group input:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 12px rgba(229, 9, 20, 0.3);
-        }
+        .search-box-group input:focus { border-color: var(--accent-color); }
 
-        /* صف الفلاتر والقوائم المنسدلة */
         .filter-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 10px;
             margin-bottom: 1rem;
         }
@@ -148,17 +135,13 @@
             padding: 0.75rem 0.8rem;
             border-radius: var(--radius-sm);
             outline: none;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             cursor: pointer;
-            transition: all 0.2s ease;
             width: 100%;
         }
 
-        select:focus {
-            border-color: var(--accent-color);
-        }
+        select:focus { border-color: var(--accent-color); }
 
-        /* شريط التاغات والتصنيفات السريعة الأفقية */
         .genre-tags-bar {
             display: flex;
             gap: 8px;
@@ -166,7 +149,6 @@
             padding-bottom: 8px;
             margin-bottom: 1rem;
             scrollbar-width: thin;
-            scrollbar-color: var(--accent-color) var(--bg-color);
         }
 
         .tag-btn {
@@ -179,14 +161,13 @@
             font-weight: 600;
             white-space: nowrap;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
         }
 
         .tag-btn:hover, .tag-btn.active {
             background: var(--accent-color);
             color: #fff;
             border-color: var(--accent-color);
-            box-shadow: 0 0 10px rgba(229, 9, 20, 0.4);
         }
 
         .action-buttons {
@@ -197,14 +178,8 @@
             align-items: center;
         }
 
-        .btn-group-left, .btn-group-right {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            align-items: center;
-        }
+        .btn-group-left, .btn-group-right { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 
-        /* الأزرار العامة */
         .btn {
             background-color: var(--accent-color);
             color: white;
@@ -223,86 +198,18 @@
             box-shadow: 0 4px 12px rgba(229, 9, 20, 0.25);
         }
 
-        .btn:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-2px);
-        }
+        .btn:hover { background-color: var(--accent-hover); transform: translateY(-2px); }
+        .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-dim); }
+        .btn-ios-app { background: linear-gradient(135deg, #1d1d1f 0%, #3a3a3c 100%); color: #fff; border: 1px solid #48484a; }
+        .btn-stats { background: #2b1803; color: #f59e0b; border: 1px solid #d97706; }
+        .btn-arabic-source { background: #50080f; color: #ffffff; border: 1px solid var(--border-color); }
+        .btn-starz { background: #200b3b; color: #d8b4fe; border: 1px solid #7e22ce; }
+        .btn-random { background: linear-gradient(135deg, #d97706 0%, #b45309 100%); color: #ffffff; }
+        .btn-wheel { background: linear-gradient(135deg, #7c3aed 0%, #4c1d95 100%); color: #fff; }
+        .btn-translate { background: #0f382c; color: #6ee7b7; border: 1px solid #059669; }
+        .btn-tab { background: var(--bg-color); border: 1px solid var(--border-color); color: var(--text-dim); }
+        .btn-tab.active { background: var(--accent-color); color: #fff; border-color: var(--accent-color); }
 
-        .btn:disabled {
-            background-color: #2b0c10;
-            color: #704044;
-            cursor: not-allowed;
-            box-shadow: none;
-            transform: none;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-dim);
-            box-shadow: none;
-        }
-
-        .btn-outline:hover {
-            background: var(--card-hover);
-            color: #fff;
-            border-color: var(--accent-dark);
-        }
-
-        .btn-ios-app {
-            background: linear-gradient(135deg, #1d1d1f 0%, #3a3a3c 100%);
-            color: #fff;
-            border: 1px solid #48484a;
-        }
-
-        .btn-stats {
-            background: #2b1803;
-            color: #f59e0b;
-            border: 1px solid #d97706;
-        }
-
-        .btn-arabic-source {
-            background: #50080f;
-            color: #ffffff;
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-arabic-source:hover {
-            background: var(--accent-color);
-            color: #ffffff;
-            border-color: var(--accent-color);
-        }
-
-        .btn-starz {
-            background: #200b3b;
-            color: #d8b4fe;
-            border: 1px solid #7e22ce;
-        }
-
-        .btn-random {
-            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-            color: #ffffff;
-        }
-
-        .btn-translate {
-            background: #0f382c;
-            color: #6ee7b7;
-            border: 1px solid #059669;
-        }
-
-        .btn-tab {
-            background: var(--bg-color);
-            border: 1px solid var(--border-color);
-            color: var(--text-dim);
-        }
-
-        .btn-tab.active {
-            background: var(--accent-color);
-            color: #fff;
-            border-color: var(--accent-color);
-        }
-
-        /* شارات العداد */
         .counter-badge {
             background-color: rgba(229, 9, 20, 0.1);
             border: 1px solid var(--border-color);
@@ -313,47 +220,13 @@
             color: #fff;
         }
 
-        .counter-badge span {
-            color: var(--accent-color);
-            font-weight: bold;
-        }
+        .counter-badge span { color: var(--accent-color); font-weight: bold; }
 
-        /* 📜 شريط مشاهدات المانهوا الأخيرة 📜 */
-        .recent-section {
-            margin-top: 1rem;
-            text-align: right;
-            display: none;
-        }
-
-        .recent-title {
-            font-size: 0.85rem;
-            font-weight: bold;
-            color: var(--text-dim);
-            margin-bottom: 0.5rem;
-        }
-
-        .recent-list {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 5px;
-        }
-
+        .recent-section { margin-top: 1rem; text-align: right; display: none; }
+        .recent-title { font-size: 0.85rem; font-weight: bold; color: var(--text-dim); margin-bottom: 0.5rem; }
+        .recent-list { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; }
         .recent-chip {
-            background: #220b0e;
-            border: 1px solid var(--border-color);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.78rem;
-            white-space: nowrap;
-            cursor: pointer;
-            color: #fff;
-            transition: all 0.2s;
-        }
-
-        .recent-chip:hover {
-            border-color: var(--accent-color);
-            color: var(--accent-color);
+            background: #220b0e; border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 20px; font-size: 0.78rem; white-space: nowrap; cursor: pointer; color: #fff;
         }
 
         /* شبكة العرض */
@@ -363,11 +236,8 @@
             gap: 1.2rem;
         }
 
-        @media (min-width: 600px) {
-            .grid { grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)); }
-        }
+        @media (min-width: 600px) { .grid { grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)); } }
 
-        /* كروت المانهوا */
         .card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -381,32 +251,28 @@
             position: relative;
         }
 
-        .card:hover {
-            transform: translateY(-6px);
-            border-color: var(--accent-color);
-            box-shadow: 0 10px 25px rgba(229, 9, 20, 0.35);
-        }
+        .card:hover { transform: translateY(-6px); border-color: var(--accent-color); box-shadow: 0 10px 25px rgba(229, 9, 20, 0.35); }
 
-        .card-img-wrap {
-            position: relative;
-            width: 100%;
-            padding-top: 140%;
-            overflow: hidden;
-            background: #120406;
-        }
+        .card-img-wrap { position: relative; width: 100%; padding-top: 140%; overflow: hidden; background: #120406; }
+        .card-img-wrap img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
 
-        .card-img-wrap img {
+        /* وسام التريند (الميزة 1) */
+        .trending-badge {
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
+            top: 8px; right: 8px;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: #000;
+            font-size: 0.65rem;
+            font-weight: 900;
+            padding: 3px 8px;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            z-index: 2;
         }
 
         .status-tag {
             position: absolute;
-            bottom: 8px;
-            right: 8px;
+            bottom: 8px; right: 8px;
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(4px);
             padding: 2px 8px;
@@ -420,534 +286,95 @@
         .status-tag.HIATUS { color: var(--gold-color); border: 1px solid var(--gold-color); }
 
         .fav-btn-icon {
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            background: rgba(13, 4, 5, 0.85);
-            backdrop-filter: blur(4px);
-            border: 1px solid var(--border-color);
-            color: #fff;
-            border-radius: 50%;
-            width: 34px;
-            height: 34px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 0.95rem;
-            z-index: 2;
+            position: absolute; top: 8px; left: 8px;
+            background: rgba(13, 4, 5, 0.85); backdrop-filter: blur(4px); border: 1px solid var(--border-color);
+            color: #fff; border-radius: 50%; width: 34px; height: 34px;
+            display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.95rem; z-index: 2;
         }
+        .fav-btn-icon.active { color: var(--accent-color); border-color: var(--accent-color); background: rgba(229, 9, 20, 0.15); }
 
-        .fav-btn-icon.active {
-            color: var(--accent-color);
-            border-color: var(--accent-color);
-            background: rgba(229, 9, 20, 0.15);
-        }
+        .card-info { padding: 0.85rem; display: flex; flex-direction: column; gap: 0.4rem; flex-grow: 1; justify-content: space-between; }
+        .card-title { font-size: 0.9rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #fff; }
+        .card-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; }
+        .score { color: var(--gold-color); font-weight: bold; }
+        .genres { font-size: 0.72rem; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px; }
 
-        .card-info {
-            padding: 0.85rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
-            flex-grow: 1;
-            justify-content: space-between;
-        }
-
-        .card-title {
-            font-size: 0.9rem;
-            font-weight: 700;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: #fff;
-        }
-
-        .card-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.78rem;
-        }
-
-        .score {
-            color: var(--gold-color);
-            font-weight: bold;
-        }
-
-        .genres {
-            font-size: 0.72rem;
-            color: var(--text-dim);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100px;
-        }
-
-        /* 🎵 زر المشغل الموسيقي العائم 🎵 */
+        /* مشغل الموسيقى */
         .music-fab {
-            position: fixed;
-            bottom: 25px;
-            left: 25px;
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #1ed760 0%, #159643 100%);
-            color: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: 0 8px 25px rgba(30, 215, 96, 0.4);
-            cursor: pointer;
-            z-index: 9999;
+            position: fixed; bottom: 25px; left: 25px; width: 55px; height: 55px; border-radius: 50%;
+            background: linear-gradient(135deg, #1ed760 0%, #159643 100%); color: #000;
+            display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+            box-shadow: 0 8px 25px rgba(30, 215, 96, 0.4); cursor: pointer; z-index: 9999;
         }
-
-        .music-fab.playing {
-            animation: pulse-music 2s infinite;
-        }
-
+        .music-fab.playing { animation: pulse-music 2s infinite; }
         @keyframes pulse-music {
             0% { box-shadow: 0 0 0 0 rgba(30, 215, 96, 0.7); }
             70% { box-shadow: 0 0 0 15px rgba(30, 215, 96, 0); }
             100% { box-shadow: 0 0 0 0 rgba(30, 215, 96, 0); }
         }
 
-        /* 🎧 مشغل سبوتيفاي المحترف 🎧 */
         .spotify-widget {
-            position: fixed;
-            bottom: 90px;
-            left: 25px;
-            width: 380px;
-            max-width: calc(100vw - 40px);
-            background: #121212;
-            border: 1px solid #282828;
-            border-radius: var(--radius-md);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.95);
-            padding: 1.2rem;
-            z-index: 9998;
-            display: none;
-            animation: slideUp 0.3s ease;
+            position: fixed; bottom: 90px; left: 25px; width: 380px; max-width: calc(100vw - 40px);
+            background: #121212; border: 1px solid #282828; border-radius: var(--radius-md);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.95); padding: 1.2rem; z-index: 9998; display: none;
         }
-
         .spotify-widget.active { display: block; }
+        .spotify-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.8rem; color: var(--green-color); font-weight: bold; }
+        .spotify-close { background: transparent; border: none; color: var(--text-dim); cursor: pointer; font-size: 1.1rem; }
+        .spotify-input-group { display: flex; gap: 6px; margin-bottom: 0.8rem; }
+        .spotify-input-group input { padding: 0.52rem 0.8rem; font-size: 0.8rem; border-radius: 6px; background: #242424; border: 1px solid #333; color: #fff; width: 100%; }
+        .spotify-input-group button { padding: 0.52rem 0.9rem; font-size: 0.8rem; background: var(--green-color); color: #000; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
 
-        .spotify-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 0.8rem;
-            color: var(--green-color);
-            font-weight: bold;
-            font-size: 0.95rem;
-        }
-
-        .spotify-close {
-            background: transparent;
-            border: none;
-            color: var(--text-dim);
-            cursor: pointer;
-            font-size: 1.1rem;
-        }
-
-        .spotify-input-group {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 0.8rem;
-        }
-
-        .spotify-input-group input {
-            padding: 0.52rem 0.8rem;
-            font-size: 0.8rem;
-            border-radius: 6px;
-            background: #242424;
-            border: 1px solid #333;
-            color: #fff;
-            width: 100%;
-        }
-
-        .spotify-input-group button {
-            padding: 0.52rem 0.9rem;
-            font-size: 0.8rem;
-            background: var(--green-color);
-            color: #000;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .player-viewport {
-            width: 100%;
-            height: 180px;
-            background: #000;
-            border-radius: var(--radius-sm);
-            overflow: hidden;
-            margin-bottom: 0.8rem;
-            position: relative;
-            display: none;
-        }
-
+        .player-viewport { width: 100%; height: 180px; background: #000; border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 0.8rem; display: none; }
         .player-viewport.active { display: block; }
         .player-viewport iframe { width: 100%; height: 100%; border: none; }
 
-        .player-body {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: #181818;
-            padding: 0.8rem;
-            border-radius: 10px;
-            margin-bottom: 0.8rem;
-        }
-
-        .album-art {
-            width: 50px;
-            height: 50px;
-            border-radius: 8px;
-            background: #282828;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--green-color);
-            font-size: 1.3rem;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-
+        .player-body { display: flex; align-items: center; gap: 12px; background: #181818; padding: 0.8rem; border-radius: 10px; margin-bottom: 0.8rem; }
+        .album-art { width: 50px; height: 50px; border-radius: 8px; background: #282828; display: flex; align-items: center; justify-content: center; color: var(--green-color); font-size: 1.3rem; overflow: hidden; flex-shrink: 0; }
         .album-art img { width: 100%; height: 100%; object-fit: cover; }
-
         .track-info { flex-grow: 1; overflow: hidden; }
-
-        .track-name {
-            font-size: 0.85rem;
-            font-weight: bold;
-            color: #fff;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
+        .track-name { font-size: 0.85rem; font-weight: bold; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .track-artist { font-size: 0.75rem; color: var(--text-dim); }
 
-        /* 🎛️ أزرار التحكم بأسلوب سبوتيفاي 🎛️ */
-        .spotify-controls {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 18px;
-            margin-bottom: 0.8rem;
-        }
-
-        .spotify-btn {
-            background: transparent;
-            border: none;
-            color: #b3b3b3;
-            font-size: 1.15rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .spotify-btn:hover {
-            color: #fff;
-            transform: scale(1.1);
-        }
-
-        .spotify-btn.play-btn {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: #fff;
-            color: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255,255,255,0.2);
-        }
-
-        .spotify-btn.play-btn:hover {
-            transform: scale(1.08);
-            background: var(--green-color);
-        }
+        .spotify-controls { display: flex; align-items: center; justify-content: center; gap: 18px; margin-bottom: 0.8rem; }
+        .spotify-btn { background: transparent; border: none; color: #b3b3b3; font-size: 1.15rem; cursor: pointer; }
+        .spotify-btn.play-btn { width: 44px; height: 44px; border-radius: 50%; background: #fff; color: #000; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; }
 
         .spotify-actions-bar { display: flex; gap: 6px; }
-
-        .btn-music-action {
-            flex: 1;
-            padding: 6px 8px;
-            font-size: 0.75rem;
-            border-radius: 6px;
-            background: #242424;
-            color: #fff;
-            border: 1px solid #333;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.2s;
-        }
-
-        .btn-music-action:hover {
-            background: var(--green-color);
-            color: #000;
-            font-weight: bold;
-        }
-
-        .playlist-container {
-            max-height: 140px;
-            overflow-y: auto;
-            background: #181818;
-            border-radius: 8px;
-            padding: 6px;
-            margin-top: 0.6rem;
-            display: none;
-            border: 1px solid #282828;
-        }
-
+        .btn-music-action { flex: 1; padding: 6px 8px; font-size: 0.75rem; border-radius: 6px; background: #242424; color: #fff; border: 1px solid #333; cursor: pointer; text-align: center; }
+        .playlist-container { max-height: 160px; overflow-y: auto; background: #181818; border-radius: 8px; padding: 6px; margin-top: 0.6rem; display: none; border: 1px solid #282828; }
         .playlist-container.active { display: block; }
+        .playlist-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; font-size: 0.78rem; border-bottom: 1px solid #222; cursor: pointer; border-radius: 4px; }
+        .playlist-item:hover { background: #252525; color: var(--green-color); }
+        .playlist-item-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px; }
+        .playlist-del-btn { color: #ff4757; background: transparent; border: none; cursor: pointer; }
 
-        .playlist-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 6px 10px;
-            font-size: 0.78rem;
-            border-bottom: 1px solid #222;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        .playlist-item:hover {
-            background: #252525;
-            color: var(--green-color);
-        }
-
-        .playlist-item-title {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 220px;
-        }
-
-        .playlist-del-btn { color: #ff4757; background: transparent; border: none; cursor: pointer; padding: 2px 6px; }
-
-        /* ✍️ حقول الفصل والملاحظات المضافة داخل النافذة ✍️ */
-        .chapter-notes-box {
-            background: #18080a;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            padding: 0.8rem;
-            margin-bottom: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .chapter-notes-box label {
-            font-size: 0.78rem;
-            color: var(--text-dim);
-            font-weight: bold;
-        }
-
-        .chapter-notes-inputs {
-            display: flex;
-            gap: 8px;
-        }
-
-        .chapter-notes-inputs input[type="number"] {
-            width: 100px;
-            background: var(--bg-color);
-            border: 1px solid var(--border-color);
-            color: #fff;
-            padding: 6px 10px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-        }
-
-        .chapter-notes-inputs input[type="text"] {
-            flex: 1;
-            background: var(--bg-color);
-            border: 1px solid var(--border-color);
-            color: #fff;
-            padding: 6px 10px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-        }
-
-        /* 📊 لوحة الإحصائيات 📊 */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-top: 1rem;
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            padding: 1rem;
-            text-align: center;
-        }
-
-        .stat-card .num {
-            font-size: 1.6rem;
-            font-weight: 900;
-            color: var(--accent-color);
-        }
-
-        .stat-card .label {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-        }
-
-        .ios-guide-box {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px dashed var(--accent-color);
-            border-radius: var(--radius-sm);
-            padding: 1rem;
-            margin-top: 1rem;
-            text-align: right;
-            font-size: 0.85rem;
-            line-height: 1.8;
-            color: var(--text-dim);
-        }
-
-        /* الهياكل العظمية للتحميل (Skeletons) */
-        .skeleton {
-            background: linear-gradient(90deg, #18080a 25%, #2a0e12 50%, #18080a 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-            border-radius: var(--radius-md);
-        }
-
-        @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        .skeleton-card { height: 300px; }
-
-        /* النوافذ المنبثقة (Modals) */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(5, 1, 2, 0.88);
-            backdrop-filter: blur(8px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 99999;
-            padding: 1rem;
-        }
-
+        /* النوافذ المنبثقة */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(5, 1, 2, 0.88); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 99999; padding: 1rem; }
         .modal-overlay.active { display: flex; }
-
-        .modal {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            max-width: 680px;
-            width: 100%;
-            max-height: 92vh;
-            overflow-y: auto;
-            text-align: right;
-            padding: 1.5rem;
-            position: relative;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
-            animation: popIn 0.25s ease forwards;
-        }
-
-        @keyframes popIn {
-            from { opacity: 0; transform: scale(0.92); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 1rem; left: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: none;
-            color: var(--text-dim);
-            font-size: 1.2rem;
-            width: 32px; height: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
+        .modal { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-lg); max-width: 680px; width: 100%; max-height: 92vh; overflow-y: auto; text-align: right; padding: 1.5rem; position: relative; box-shadow: 0 15px 40px rgba(0,0,0,0.9); }
+        .modal-close { position: absolute; top: 1rem; left: 1rem; background: rgba(255,255,255,0.05); border: none; color: var(--text-dim); font-size: 1.2rem; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        
         .modal-header { display: flex; gap: 1.2rem; margin-bottom: 1.2rem; }
-        .modal-header img { width: 130px; height: 185px; object-fit: cover; border-radius: var(--radius-sm); flex-shrink: 0; border: 1px solid var(--border-color); }
-
+        .modal-header img { width: 130px; height: 185px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--border-color); }
         .modal-details { display: flex; flex-direction: column; gap: 0.5rem; justify-content: center; }
-        .modal-title { font-size: 1.3rem; font-weight: 800; color: #fff; line-height: 1.3; }
+        .modal-title { font-size: 1.3rem; font-weight: 800; color: #fff; }
 
-        .modal-badge-group { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
-        .badge { background: rgba(255, 255, 255, 0.06); padding: 3px 8px; border-radius: 4px; font-size: 0.78rem; color: var(--text-dim); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .chapter-notes-box { background: #18080a; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.8rem; margin-bottom: 1rem; display: flex; flex-direction: column; gap: 6px; }
+        .chapter-notes-box label { font-size: 0.78rem; color: var(--text-dim); font-weight: bold; }
+        .chapter-notes-inputs { display: flex; gap: 8px; }
+        .chapter-notes-inputs input[type="number"] { width: 100px; background: var(--bg-color); border: 1px solid var(--border-color); color: #fff; padding: 6px 10px; border-radius: 4px; }
+        .chapter-notes-inputs input[type="text"] { flex: 1; background: var(--bg-color); border: 1px solid var(--border-color); color: #fff; padding: 6px 10px; border-radius: 4px; }
 
-        .desc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 1rem; }
+        .stat-card { background: rgba(255,255,255,0.04); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1rem; text-align: center; }
+        .stat-card .num { font-size: 1.6rem; font-weight: 900; color: var(--accent-color); }
+        .stat-card .label { font-size: 0.75rem; color: var(--text-dim); }
 
-        .modal-desc {
-            font-size: 0.88rem;
-            color: var(--text-dim);
-            line-height: 1.7;
-            margin-bottom: 1.2rem;
-            max-height: 140px;
-            overflow-y: auto;
-            padding-left: 5px;
-            border-right: 2px solid var(--accent-dark);
-            padding-right: 10px;
-        }
-
-        .sources-title { font-size: 0.85rem; font-weight: bold; color: var(--text-dim); margin-bottom: 0.5rem; }
-        .modal-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-
-        .status-selector {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 1rem;
-            background: var(--bg-color);
-            padding: 5px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-color);
-        }
-
-        .status-option {
-            flex: 1;
-            text-align: center;
-            padding: 6px 4px;
-            font-size: 0.75rem;
-            border-radius: 4px;
-            cursor: pointer;
-            color: var(--text-dim);
-        }
-
-        .status-option.active { background: var(--accent-dark); color: #fff; font-weight: bold; }
-
-        /* التنبيه العائم (Toast) */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background-color: var(--accent-color);
-            color: #fff;
-            padding: 0.8rem 1.8rem;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            box-shadow: 0 8px 25px rgba(229, 9, 20, 0.5);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 100000;
-        }
-
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background-color: var(--accent-color); color: #fff; padding: 0.8rem 1.8rem; border-radius: 30px; font-size: 0.9rem; font-weight: bold; box-shadow: 0 8px 25px rgba(229,9,20,0.5); transition: transform 0.3s; z-index: 100000; }
         .toast.show { transform: translateX(-50%) translateY(0); }
 
         .empty-state { grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; color: var(--text-dim); }
-        .empty-state i { font-size: 3rem; margin-bottom: 1rem; color: var(--accent-dark); }
-
         #importFileInput { display: none; }
     </style>
 </head>
@@ -962,16 +389,15 @@
 
     <div class="container">
         
-        <!-- كرت الفلترة والتحكم الشامل -->
         <div class="controls-card">
             
-            <!-- 🔍 البحث المباشر باسم المانهوا أو الـ ID 🔍 -->
+            <!-- شريط البحث المباشر -->
             <div class="search-box-group">
-                <input type="text" id="directSearchInput" placeholder="ابحث باسم المانهوا بالإنجليزية/العربية أو اكتب الـ ID الرقمي..." oninput="applyFilters()" onkeypress="if(event.key === 'Enter') searchDirectManhwa()">
+                <input type="text" id="directSearchInput" placeholder="ابحث باسم المانهوا بالإنجليزية/العربية أو الـ ID..." oninput="applyFilters()" onkeypress="if(event.key === 'Enter') searchDirectManhwa()">
                 <button class="btn" onclick="searchDirectManhwa()"><i class="fa-solid fa-magnifying-glass"></i> بحث مباشر</button>
             </div>
 
-            <!-- 🎯 شريط خيارات الفلترة المنسدلة 🎯 -->
+            <!-- خيارات الفلترة المنسدلة -->
             <div class="filter-grid">
                 <select id="genreSelect" onchange="applyFilters()">
                     <option value="ALL">جميع التصنيفات 🎭</option>
@@ -983,24 +409,22 @@
                     <option value="Comedy">كوميديا (Comedy)</option>
                     <option value="Adventure">مغامرة (Adventure)</option>
                     <option value="Supernatural">خارق للطبيعة (Supernatural)</option>
-
-                    <option value="Slice of Life">شريحة من الحياة (Slice of Life)</option>
-
+                    <option value="Slice of Life">شريحة من الحياة</option>
                     <option value="Mystery">غموض (Mystery)</option>
-                    <option value="Sci-Fi">خيال علمي (Sci-Fi)</option>
                 </select>
 
                 <select id="statusSelect" onchange="applyFilters()">
                     <option value="ALL">جميع الحالات 📌</option>
-                    <option value="RELEASING">مستمر (Releasing) 🟢</option>
-                    <option value="FINISHED">مكتمل (Finished) 🔵</option>
-                    <option value="HIATUS">متوقف مؤقتاً (Hiatus) 🟡</option>
+                    <option value="RELEASING">مستمر 🟢</option>
+                    <option value="FINISHED">مكتمل 🔵</option>
+                    <option value="HIATUS">متوقف مؤقتاً 🟡</option>
                 </select>
 
-                <select id="sortSelect" onchange="applyFilters()">
-                    <option value="DEFAULT">الترتيب الافتراضي 🔀</option>
-                    <option value="SCORE_DESC">الأعلى تقييماً ⭐</option>
-                    <option value="TITLE_ASC">أبجدي (A-Z) 🔤</option>
+                <select id="minScoreSelect" onchange="applyFilters()">
+                    <option value="0">أقل تقييم ⭐ (الكل)</option>
+                    <option value="7">⭐ 7.0 فأكثر</option>
+                    <option value="8">⭐ 8.0 فأكثر</option>
+                    <option value="8.5">⭐ 8.5 ممتاز جداً</option>
                 </select>
 
                 <select id="userStatusFilter" onchange="applyFilters()">
@@ -1011,7 +435,7 @@
                 </select>
             </div>
 
-            <!-- 🏷️ شريط تاغات التصنيف السريعة الأفقية 🏷️ -->
+            <!-- شريط التصنيفات الأفقية -->
             <div class="genre-tags-bar">
                 <button class="tag-btn active" onclick="selectGenreTag('ALL', this)">الكل 🌟</button>
                 <button class="tag-btn" onclick="selectGenreTag('Action', this)">أكشن ⚔️</button>
@@ -1019,62 +443,45 @@
                 <button class="tag-btn" onclick="selectGenreTag('Fantasy', this)">خيال 🔮</button>
                 <button class="tag-btn" onclick="selectGenreTag('Adventure', this)">مغامرة 🏹</button>
                 <button class="tag-btn" onclick="selectGenreTag('Romance', this)">رومانسية ❤️</button>
-                <button class="tag-btn" onclick="selectGenreTag('Supernatural', this)">خارق للطبيعة 👻</button>
-                <button class="tag-btn" onclick="selectGenreTag('Comedy', this)">كوميديا 😂</button>
             </div>
 
-            <!-- أزرار الإجراءات -->
+            <!-- أزرار الإجراءات وتخصيص الثيم (الميزة 3) -->
             <div class="action-buttons">
                 <div class="btn-group-left">
-                    <button class="btn" id="loadBtn" onclick="fetchUniqueManhwa()">
-                        <i class="fa-solid fa-rotate"></i> جلب 50 عشوائي
-                    </button>
-                    <button class="btn btn-random" onclick="pickRandomManhwa()">
-                        <i class="fa-solid fa-dice"></i> اقتراح عشوائي
-                    </button>
-                    <button class="btn btn-tab" id="favTabBtn" onclick="toggleFavView()">
-                        <i class="fa-solid fa-heart" style="color: #e50914;"></i> المفضلة (<span id="favCount">0</span>)
-                    </button>
+                    <button class="btn" id="loadBtn" onclick="fetchUniqueManhwa()"><i class="fa-solid fa-rotate"></i> جلب 50 عشوائي</button>
+                    <button class="btn btn-wheel" onclick="openWheelModal()"><i class="fa-solid fa-dharmachakra"></i> عجلة الحظ 🎡</button>
+                    <button class="btn btn-random" onclick="pickRandomManhwa()"><i class="fa-solid fa-dice"></i> اقتراح عشوائي</button>
+                    <button class="btn btn-tab" id="favTabBtn" onclick="toggleFavView()"><i class="fa-solid fa-heart" style="color: #e50914;"></i> المفضلة (<span id="favCount">0</span>)</button>
                 </div>
 
                 <div class="btn-group-right">
-                    <button class="btn btn-stats" onclick="openStatsModal()">
-                        <i class="fa-solid fa-chart-pie"></i> إحصائياتي
-                    </button>
-                    <button class="btn btn-ios-app" onclick="openIosGuideModal()">
-                        <i class="fa-brands fa-apple"></i> iOS App
-                    </button>
-                    <button class="btn btn-outline" onclick="exportData()"><i class="fa-solid fa-download"></i> تصدير</button>
-                    <button class="btn btn-outline" onclick="triggerImport()"><i class="fa-solid fa-upload"></i> استيراد</button>
-                    <input type="file" id="importFileInput" accept=".json" onchange="importData(event)">
-
-                    <button class="btn btn-outline" onclick="resetExclusions()"><i class="fa-solid fa-trash-arrow-up"></i></button>
-
-                    <div class="counter-badge">
-                        العدد المعروض: <span id="manhwaCountNumber">0</span>
-                    </div>
+                    <!-- أزرار الثيمات المخصصة -->
+                    <select id="themeSelector" onchange="changeTheme(this.value)" style="width: auto; padding: 0.5rem; font-size: 0.78rem;">
+                        <option value="default">ثيم أحمر ناري 🔥</option>
+                        <option value="blue">نيون أزرق ⚡</option>
+                        <option value="purple">بنفسجي ملكي 🔮</option>
+                        <option value="green">أخضر سبوتيفاي 💚</option>
+                    </select>
+                    <button class="btn btn-stats" onclick="openStatsModal()"><i class="fa-solid fa-chart-pie"></i> إحصائياتي</button>
+                    <button class="btn btn-ios-app" onclick="openIosGuideModal()"><i class="fa-brands fa-apple"></i> iOS App</button>
+                    <div class="counter-badge">المعروض: <span id="manhwaCountNumber">0</span></div>
                 </div>
             </div>
 
-            <!-- 📜 سجل المانهوات الأخيرة المشاهدة 📜 -->
             <div class="recent-section" id="recentSection">
-                <div class="recent-title"><i class="fa-solid fa-clock-rotate-left"></i> المانهوات المعاينة مؤخراً:</div>
+                <div class="recent-title"><i class="fa-solid fa-clock-rotate-left"></i> معاينة مؤخراً:</div>
                 <div class="recent-list" id="recentList"></div>
             </div>
 
         </div>
 
-        <!-- شبكة العرض -->
         <div class="grid" id="manhwaGrid"></div>
 
     </div>
 
-    <!-- 🎵 زر المشغل الموسيقي العائم 🎵 -->
-    <div class="music-fab" id="musicFab" onclick="toggleSpotifyWidget()" title="مشغل يوتيوب والمفضلة">
-        <i class="fa-brands fa-spotify"></i>
-    </div>
+    <!-- مشغل الموسيقى -->
+    <div class="music-fab" id="musicFab" onclick="toggleSpotifyWidget()" title="مشغل الموسيقى والمفضلة"><i class="fa-brands fa-spotify"></i></div>
 
-    <!-- 🎧 مشغل يوتيوب بأسلوب سبوتيفاي المحترف 🎧 -->
     <div class="spotify-widget" id="spotifyWidget">
         <div class="spotify-header">
             <span><i class="fa-brands fa-spotify"></i> مشغل يوتيوب & المفضلة</span>
@@ -1082,7 +489,7 @@
         </div>
 
         <div class="spotify-input-group">
-            <input type="text" id="musicUrlInput" placeholder="ضع رابط YouTube هنا (عادي أو Shorts)...">
+            <input type="text" id="musicUrlInput" placeholder="ضع رابط YouTube هنا...">
             <button onclick="loadYouTubeMusic()">تشغيل</button>
         </div>
 
@@ -1094,26 +501,26 @@
             <div class="album-art" id="albumArt"><i class="fa-solid fa-music"></i></div>
             <div class="track-info">
                 <div class="track-name" id="trackName">جاهز للتشغيل</div>
-                <div class="track-artist" id="trackArtist">اختر من القائمة المفضلة بالأسفل</div>
+                <div class="track-artist" id="trackArtist">الأغاني الأربعة موجودة بمفضلتك تلقائياً</div>
             </div>
         </div>
 
         <div class="spotify-controls">
-            <button class="spotify-btn" onclick="seekMusic(-10)" title="تراجع 10 ثواني"><i class="fa-solid fa-backward-step"></i></button>
-            <button class="spotify-btn play-btn" id="playPauseBtn" onclick="togglePlayPause()" title="تشغيل / إيقاف"><i class="fa-solid fa-play"></i></button>
-            <button class="spotify-btn" onclick="seekMusic(10)" title="تقديم 10 ثواني"><i class="fa-solid fa-forward-step"></i></button>
+            <button class="spotify-btn" onclick="seekMusic(-10)"><i class="fa-solid fa-backward-step"></i></button>
+            <button class="spotify-btn play-btn" id="playPauseBtn" onclick="togglePlayPause()"><i class="fa-solid fa-play"></i></button>
+            <button class="spotify-btn" onclick="seekMusic(10)"><i class="fa-solid fa-forward-step"></i></button>
         </div>
 
         <div class="spotify-actions-bar">
-            <button class="btn-music-action" onclick="saveCurrentMusicToFav()"><i class="fa-solid fa-heart" style="color:#1ed760;"></i> حفظ بالمفضلة</button>
-            <button class="btn-music-action" onclick="togglePlaylistView()"><i class="fa-solid fa-list-ul"></i> قائمة الأغاني (<span id="musicFavCount">0</span>)</button>
+            <button class="btn-music-action" onclick="saveCurrentMusicToFav()"><i class="fa-solid fa-heart" style="color:#1ed760;"></i> حفظ</button>
+            <button class="btn-music-action" onclick="togglePlaylistView()"><i class="fa-solid fa-list-ul"></i> القائمة (<span id="musicFavCount">0</span>)</button>
             <button class="btn-music-action" onclick="toggleViewport()"><i class="fa-solid fa-eye"></i> إظهار/إخفاء</button>
         </div>
 
         <div class="playlist-container" id="playlistContainer"></div>
     </div>
 
-    <!-- Modal النافذة المنبثقة للتفاصيل والمصادر -->
+    <!-- Modal التفاصيل -->
     <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
         <div class="modal" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
@@ -1125,14 +532,12 @@
                     <div class="modal-badge-group">
                         <span class="badge" id="modalScore" style="color: var(--gold-color);"><i class="fa-solid fa-star"></i> 0.0</span>
                         <span class="badge" id="modalStatus">مستمر</span>
-                        <span class="badge" id="modalFormat">MANHWA</span>
                         <span class="badge" id="modalIdTag" style="color:#38bdf8;">ID: --</span>
                     </div>
                     <div class="genres" id="modalGenres" style="margin-top: 5px; color: var(--text-dim);">التصنيفات</div>
                 </div>
             </div>
 
-            <!-- تحديث حالة القراءة الشخصية -->
             <div class="status-selector">
                 <div class="status-option" id="st-none" onclick="setUserStatus('NONE')">غير محدد</div>
                 <div class="status-option" id="st-reading" onclick="setUserStatus('READING')">📖 أقرأها</div>
@@ -1140,24 +545,20 @@
                 <div class="status-option" id="st-completed" onclick="setUserStatus('COMPLETED')">✅ أكملتها</div>
             </div>
 
-            <!-- ✍️ الفصول والملاحظات الشخصية ✍️ -->
             <div class="chapter-notes-box">
-                <label><i class="fa-solid fa-pen-to-square"></i> تقدم القراءة وملاحظاتك المخصصة:</label>
+                <label><i class="fa-solid fa-pen-to-square"></i> تقدم القراءة والملاحظات:</label>
                 <div class="chapter-notes-inputs">
                     <input type="number" id="userChapterInput" placeholder="رقم الفصل" onchange="saveUserNotes()">
-                    <input type="text" id="userNoteInput" placeholder="ملاحظة سريعة (مثلاً: وصلت قتال الزعيم)..." onchange="saveUserNotes()">
+                    <input type="text" id="userNoteInput" placeholder="ملاحظة سريعة..." onchange="saveUserNotes()">
                 </div>
             </div>
 
             <div class="desc-header">
                 <span style="font-size: 0.85rem; font-weight: bold; color: var(--text-dim);"><i class="fa-solid fa-align-right"></i> القصة والوصف:</span>
-                <button class="btn btn-translate" id="translateBtn" onclick="translateCurrentDesc()" style="padding: 0.3rem 0.8rem; font-size: 0.78rem;">
-                    <i class="fa-solid fa-language"></i> ترجمة الوصف للعربية
-                </button>
+                <button class="btn btn-translate" id="translateBtn" onclick="translateCurrentDesc()" style="padding: 0.3rem 0.8rem; font-size: 0.78rem;"><i class="fa-solid fa-language"></i> ترجمة الوصف</button>
             </div>
             <div class="modal-desc" id="modalDesc">الوصف غير متوفر حالياً.</div>
 
-            <!-- مصادر القراءة والمواقع العربية -->
             <div class="sources-title"><i class="fa-solid fa-book-bookmark"></i> مصادر القراءة والترجمة العربية:</div>
             <div class="modal-actions" style="margin-bottom: 1rem;">
                 <a id="searchMangaStarzBtn" target="_blank" class="btn btn-starz"><i class="fa-solid fa-star"></i> Manga Starz</a>
@@ -1176,70 +577,55 @@
         </div>
     </div>
 
-    <!-- 📊 Modal الإحصائيات 📊 -->
+    <!-- Modal عجلة الحظ العشوائية -->
+    <div class="modal-overlay" id="wheelModalOverlay" onclick="closeWheelModal()">
+        <div class="modal" onclick="event.stopPropagation()" style="text-align: center; padding: 2rem;">
+            <button class="modal-close" onclick="closeWheelModal()"><i class="fa-solid fa-xmark"></i></button>
+            <h3 style="color:#fff; margin-bottom:1rem;"><i class="fa-solid fa-dharmachakra" style="color:var(--accent-color);"></i> عجلة الحظ لاختيار المانهوا</h3>
+            <div id="wheelResultBox" style="font-size: 1.2rem; font-weight: bold; color: var(--gold-color); margin: 2rem 0; min-height: 60px;">اضغط على الزر لتدوير العجلة واختيار مانهوا لك!</div>
+            <button class="btn btn-wheel" onclick="spinWheelAction()" style="font-size: 1rem; padding: 0.9rem 2rem;"><i class="fa-solid fa-play"></i> دور العجلة الآن 🎡</button>
+        </div>
+    </div>
+
+    <!-- Modal الإحصائيات -->
     <div class="modal-overlay" id="statsModalOverlay" onclick="closeStatsModal()">
         <div class="modal" id="statsModalCard" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeStatsModal()"><i class="fa-solid fa-xmark"></i></button>
             <h3 style="color:#fff; margin-bottom:0.5rem;"><i class="fa-solid fa-chart-pie" style="color:var(--accent-color);"></i> إحصائيات مكتبتك والمفضلة</h3>
-            <p style="font-size:0.85rem; color:var(--text-dim);">ملخص المانهوات وحالتك القرائية في SLAX Manhwa</p>
-            
             <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="num" id="statFavCount">0</div>
-                    <div class="label">مانهوا بالمفضلة</div>
-                </div>
-                <div class="stat-card">
-                    <div class="num" id="statReadingCount">0</div>
-                    <div class="label">قيد القراءة حالياً</div>
-                </div>
-                <div class="stat-card">
-                    <div class="num" id="statCompletedCount">0</div>
-                    <div class="label">مانهوات مكتملة</div>
-                </div>
-                <div class="stat-card">
-                    <div class="num" id="statTopGenre">--</div>
-                    <div class="label">أكثر تصنيف مفضل لديك</div>
-                </div>
+                <div class="stat-card"><div class="num" id="statFavCount">0</div><div class="label">مانهوا بالمفضلة</div></div>
+                <div class="stat-card"><div class="num" id="statReadingCount">0</div><div class="label">قيد القراءة حالياً</div></div>
+                <div class="stat-card"><div class="num" id="statCompletedCount">0</div><div class="label">مانهوات مكتملة</div></div>
+                <div class="stat-card"><div class="num" id="statTopGenre">--</div><div class="label">أكثر تصنيف مفضل</div></div>
             </div>
-
-            <div style="margin-top: 1.2rem; display: flex; gap: 8px;">
+            <div style="margin-top: 1.2rem;">
                 <button class="btn btn-random" onclick="exportStatsPoster()"><i class="fa-solid fa-camera"></i> تصوير وبناء بوستر المفضلة</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal تثبيت تطبيق iOS -->
+    <!-- Modal تثبيت iOS -->
     <div class="modal-overlay" id="iosModalOverlay" onclick="closeIosModal()">
         <div class="modal" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeIosModal()"><i class="fa-solid fa-xmark"></i></button>
-            <h3 style="color:#fff; margin-bottom:0.5rem;"><i class="fa-brands fa-apple" style="color:var(--accent-color);"></i> تثبيت الموقع كتطبيق آيفون (iOS App)</h3>
+            <h3 style="color:#fff; margin-bottom:0.5rem;"><i class="fa-brands fa-apple" style="color:var(--accent-color);"></i> تثبيت الموقع كتطبيق آيفون</h3>
             <div class="ios-guide-box">
-                <strong style="color:#fff;">الخطوات السريعة للتثبيت:</strong>
                 <ol>
-                    <li>افتح هذا الموقع عبر متصفح <strong>Safari</strong> على الآيفون.</li>
-                    <li>اضغط على زر <strong>المشاركة 📤 (Share)</strong> بالأسفل.</li>
-                    <li>اختر <strong>"إضافة إلى الشاشة الرئيسية" ➕ (Add to Home Screen)</strong>.</li>
-                    <li>اضغط على <strong>"إضافة" (Add)</strong> بالأعلى.</li>
+                    <li>افتح الموقع عبر متصفح <strong>Safari</strong> على الآيفون.</li>
+                    <li>اضغط زر <strong>المشاركة 📤 (Share)</strong> بالأسفل.</li>
+                    <li>اختر <strong>"إضافة إلى الشاشة الرئيسية" ➕</strong>.</li>
                 </ol>
             </div>
         </div>
     </div>
 
-    <!-- التنبيه السريع (Toast) -->
     <div class="toast" id="toast"><i class="fa-solid fa-circle-check"></i> <span id="toastMsg">تمت العملية بنجاح!</span></div>
 
     <script>
         const blockedGenres = ["Boys Love", "Ecchi", "Hentai", "Yaoi", "Erotica", "Shounen Ai", "Yuri", "Shoujo Ai"];
+        const initialExcluded = [136331, 137304, 117540, 130870, 97897, 115000, 151025, 103156, 137595, 119276];
 
-        const initialExcluded = [
-            136331, 137304, 117540, 130870, 97897, 115000, 151025, 103156, 137595, 119276, 
-            177706, 113666, 130429, 141007, 120385, 116506, 175262, 75275, 117536, 52651, 
-            116382, 150836, 114542, 182066, 153432, 85155, 128882, 130149, 113488, 130229, 
-            170894, 60079, 173020, 110605, 141958, 113055, 129210, 141013, 153880, 178379, 
-            136204, 124577, 121565, 155485, 111075, 110042, 167834, 107720, 164857, 107918
-        ];
-
-        // 🎵 الأغاني الأربعة الافتراضية الدائمة بالمفضلة 🎵
+        // 🎵 الأغاني الأربعة الإجبارية الدائمة المضافة تلقائياً 🎵
         const defaultMusicPlaylist = [
             { id: 101, name: "Funk★Celeste Slowed", url: "https://youtu.be/T5iBKZmcO5s?si=1mMYa2UK7SCOm9Qo" },
             { id: 102, name: "Phonk Audio / Song 1", url: "https://youtu.be/pmZ7hTChGAY?si=30dQRI-VePy4zlSq" },
@@ -1250,9 +636,18 @@
         let savedExclusions = JSON.parse(localStorage.getItem('slax_excluded_ids')) || [];
         let favorites = JSON.parse(localStorage.getItem('slax_favorites')) || [];
         let userStatusMap = JSON.parse(localStorage.getItem('slax_user_status')) || {};
-        let musicPlaylist = JSON.parse(localStorage.getItem('slax_music_playlist')) || defaultMusicPlaylist;
+        let storedMusic = JSON.parse(localStorage.getItem('slax_music_playlist')) || [];
         let recentViews = JSON.parse(localStorage.getItem('slax_recent_views')) || [];
         let userNotes = JSON.parse(localStorage.getItem('slax_user_notes')) || {};
+        let savedTheme = localStorage.getItem('slax_theme') || 'default';
+
+        // دمج دائم للأغاني الأربعة
+        let musicPlaylist = [...storedMusic];
+        defaultMusicPlaylist.forEach(defSong => {
+            if(!musicPlaylist.some(m => m.url === defSong.url)) {
+                musicPlaylist.unshift(defSong);
+            }
+        });
 
         let excludedSet = new Set([...initialExcluded, ...savedExclusions]);
         let currentFetchedList = [];
@@ -1266,14 +661,37 @@
         let isMusicPlaying = false;
         let currentYtId = "";
 
+        // تطبيق الثيم المحفوظ
+        if (savedTheme !== 'default') {
+            document.body.className = `theme-${savedTheme}`;
+            document.getElementById('themeSelector').value = savedTheme;
+        }
+
+        function changeTheme(themeName) {
+            document.body.className = themeName === 'default' ? '' : `theme-${themeName}`;
+            localStorage.setItem('slax_theme', themeName);
+            showToast("تم تغيير ثيم الموقع بنجاح! 🎨");
+        }
+
         function openIosGuideModal() { document.getElementById('iosModalOverlay').classList.add('active'); }
         function closeIosModal() { document.getElementById('iosModalOverlay').classList.remove('active'); }
-
-        function openStatsModal() {
-            renderStatsData();
-            document.getElementById('statsModalOverlay').classList.add('active');
-        }
+        function openStatsModal() { renderStatsData(); document.getElementById('statsModalOverlay').classList.add('active'); }
         function closeStatsModal() { document.getElementById('statsModalOverlay').classList.remove('active'); }
+        
+        function openWheelModal() { document.getElementById('wheelModalOverlay').classList.add('active'); }
+        function closeWheelModal() { document.getElementById('wheelModalOverlay').classList.remove('active'); }
+
+        function spinWheelAction() {
+            const list = currentFetchedList.length > 0 ? currentFetchedList : favorites;
+            if (list.length === 0) { showToast("جلب المانهوات أولاً لتشغيل العجلة!"); return; }
+            const randomItem = list[Math.floor(Math.random() * list.length)];
+            const title = randomItem.title.english || randomItem.title.romaji;
+            document.getElementById('wheelResultBox').innerHTML = `🎉 مبروك! العجلة اختارت لك:<br><span style="color:#fff; font-size:1.4rem;">${title}</span>`;
+            setTimeout(() => {
+                closeWheelModal();
+                openModal(randomItem);
+            }, 1800);
+        }
 
         function isClean(item) {
             if (!item) return false;
@@ -1302,7 +720,6 @@
             setTimeout(() => toast.classList.remove('show'), 2800);
         }
 
-        // 🏷️ اختيار تاغات التصنيف الأفقية 🏷️
         function selectGenreTag(genre, btnEl) {
             document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
             if(btnEl) btnEl.classList.add('active');
@@ -1311,12 +728,11 @@
             applyFilters();
         }
 
-        // 🎯 تطبيق الفلاتر والبحث المباشر 🎯
         function applyFilters() {
             const searchTerm = document.getElementById('directSearchInput').value.toLowerCase().trim();
             const genreTerm = document.getElementById('genreSelect').value;
             const statusTerm = document.getElementById('statusSelect').value;
-            const sortTerm = document.getElementById('sortSelect').value;
+            const minScore = parseFloat(document.getElementById('minScoreSelect').value) || 0;
             const userStatusTerm = document.getElementById('userStatusFilter').value;
 
             const targetList = showingFavs ? favorites : currentFetchedList;
@@ -1341,27 +757,18 @@
                 }
 
                 const matchesStatus = (statusTerm === 'ALL') || (item.status === statusTerm);
+                const matchesScore = (item.averageScore / 10) >= minScore;
                 const matchesUserStatus = (userStatusTerm === 'ALL') || (userStatusMap[item.id] === userStatusTerm);
 
-                return matchesSearch && matchesGenre && matchesStatus && matchesUserStatus;
+                return matchesSearch && matchesGenre && matchesStatus && matchesScore && matchesUserStatus;
             });
-
-            if (sortTerm === 'SCORE_DESC') {
-                filtered.sort((a, b) => (b.averageScore || 0) - (a.averageScore || 0));
-            } else if (sortTerm === 'TITLE_ASC') {
-                filtered.sort((a, b) => (a.title.english || "").localeCompare(b.title.english || ""));
-            }
 
             renderCards(filtered);
         }
 
-        // 🔍 البحث المباشر باسم المانهوا أو الـ ID 🔍
         async function searchDirectManhwa() {
             const input = document.getElementById('directSearchInput').value.trim();
-            if (!input) {
-                applyFilters();
-                return;
-            }
+            if (!input) { applyFilters(); return; }
 
             showSkeletons();
             const isId = /^\d+$/.test(input);
@@ -1398,7 +805,7 @@
                 }
 
                 if (cleanList.length === 0) {
-                    showToast("لم يتم العثور على مانهوا بهذا الاسم أو الـ ID!");
+                    showToast("لم يتم العثور على نتائج!");
                     renderCards(currentFetchedList);
                     return;
                 }
@@ -1407,10 +814,9 @@
                 showingFavs = false;
                 document.getElementById('favTabBtn').classList.remove('active');
                 renderCards(cleanList);
-                showToast(`تم العثور على ${cleanList.length} مانهوا!`);
-
+                showToast(`تم العثور على ${cleanList.length} نتيجة!`);
             } catch (err) {
-                showToast("حدث خطأ في عملية البحث!");
+                showToast("حدث خطأ في البحث!");
             }
         }
 
@@ -1472,7 +878,7 @@
             document.getElementById('manhwaCountNumber').innerText = list.length;
 
             if(list.length === 0) {
-                grid.innerHTML = '<div class="empty-state"><i class="fa-solid fa-filter-circle-xmark"></i><h3>لا توجد مانهوات حالية.</h3></div>';
+                grid.innerHTML = '<div class="empty-state"><i class="fa-solid fa-filter-circle-xmark"></i><h3>لا توجد مانهوات مطابقة.</h3></div>';
                 return;
             }
 
@@ -1482,11 +888,13 @@
                 const mainGenre = item.genres && item.genres.length > 0 ? item.genres.slice(0, 2).join(', ') : 'Manhwa';
                 const isFav = favorites.some(f => f.id === item.id);
                 const statusClass = item.status || '';
+                const isTrending = item.averageScore && item.averageScore >= 80; // وسام التريند للأعمال الأعلى من 8
 
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.onclick = () => openModal(item);
                 card.innerHTML = `
+                    ${isTrending ? '<span class="trending-badge">🔥 تريند</span>' : ''}
                     <button class="fav-btn-icon ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFav(${item.id})">
                         <i class="fa-${isFav ? 'solid' : 'regular'} fa-heart"></i>
                     </button>
@@ -1579,9 +987,7 @@
             });
 
             favorites.forEach(f => {
-                if(f.genres) {
-                    f.genres.forEach(g => { genreCounts[g] = (genreCounts[g] || 0) + 1; });
-                }
+                if(f.genres) { f.genres.forEach(g => { genreCounts[g] = (genreCounts[g] || 0) + 1; }); }
             });
 
             let topGenre = "--";
@@ -1607,9 +1013,7 @@
             });
         }
 
-        /* ----------------------------------------------------
-           🎵 مشغل يوتيوب المخصص ونظام سبوتيفاي 🎵
-        ---------------------------------------------------- */
+        // مشغل الموسيقى
         function toggleSpotifyWidget() { document.getElementById('spotifyWidget').classList.toggle('active'); }
         function toggleViewport() { document.getElementById('playerViewport').classList.toggle('active'); }
         function togglePlaylistView() { document.getElementById('playlistContainer').classList.toggle('active'); }
@@ -1644,7 +1048,7 @@
 
         function togglePlayPause() {
             const viewport = document.getElementById('playerViewport');
-            if (!currentYtId) { showToast("أدخل رابط يوتيوب أولاً!"); return; }
+            if (!currentYtId) { showToast("أدخل رابط يوتيوب أو اختر أغنية!"); return; }
             if (isMusicPlaying) {
                 viewport.style.display = 'none';
                 isMusicPlaying = false;
